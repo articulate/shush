@@ -1,16 +1,22 @@
 %form{ action: "/save", method: "POST" }
-  #message
-    %textarea#note{ name: "secret" }
-    %input{ type: :submit, value: "Save" }
 
-  #options
-    Expire Message
-    %input{ type: "radio", name: "expire", value: :read, checked: :checked }
-      On Read
-    %input{ type: "radio", name: "expire", value: :time }
-      At Time
+  #message.form-group
+    %label{ for: "secret" } Message
+    %textarea#note.form-control{ name: "secret", rows: "3" }
+    %input.btn.btn-default{ type: :submit, value: "Save" }
 
-    %select#expireAt{ name: "time" }
+  %label{ for: "options" } Expire Message
+  #options.form-group
+    .radio
+      %label
+        %input{ type: "radio", name: "expire", value: :read, checked: :checked }
+        On Read
+    .radio
+      %label
+        %input.radio{ type: "radio", name: "expire", value: :time }
+        At Time
+
+    %select.form-control#expireAt{ name: "time" }
       = TIMES.each do |text, value|
         %option{ value: value }= text
 
