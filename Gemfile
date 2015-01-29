@@ -9,6 +9,7 @@ gem 'rake'
 
 group :development do
   gem 'shotgun'
+  gem 'byebug'
 end
 
 group :production do

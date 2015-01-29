@@ -1,1 +1,4 @@
-%textarea#note
+%form{ action: "/save", method: "POST" }
+  %textarea#note{ name: "secret" }
+  %input{ type: :submit, value: "Save" }
+
