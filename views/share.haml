@@ -1,3 +1,8 @@
 %h2 Here's your YURL
 
 %input{ type: "text", value: url }
+
+- if time
+  %p= "This link will expire in #{time}."
+- else
+  %p= "This link will expire when read."

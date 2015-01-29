@@ -1,4 +1,16 @@
 %form{ action: "/save", method: "POST" }
-  %textarea#note{ name: "secret" }
-  %input{ type: :submit, value: "Save" }
+  #message
+    %textarea#note{ name: "secret" }
+    %input{ type: :submit, value: "Save" }
+
+  #options
+    Expire Message
+    %input{ type: "radio", name: "expire", value: :read, checked: :checked }
+      On Read
+    %input{ type: "radio", name: "expire", value: :time }
+      At Time
+
+    %select#expireAt{ name: "time" }
+      = TIMES.each do |text, value|
+        %option{ value: value }= text
 

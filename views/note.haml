@@ -3,4 +3,7 @@
 #note
   %pre= note
 
-%p This note will be destroyed once you close this window. Make sure you don't need it again!
+- if ttl
+  %p= "This note will be destroyed in #{ttl} minutes."
+- else
+  %p This note will be destroyed once you close this window. Make sure you don't need it again!
