@@ -9,14 +9,14 @@
   #options.form-group
     .radio
       %label
-        %input{ type: "radio", name: "expire", value: :read, checked: :checked }
+        %input.radio#expire-read{ type: "radio", name: "expire", value: :read, checked: :checked }
         On Read
     .radio
       %label
-        %input.radio{ type: "radio", name: "expire", value: :time }
+        %input.radio#expire-time{ type: "radio", name: "expire", value: :time }
         At Time
 
-    %select.form-control#expireAt{ name: "time" }
+    %select.form-control#expire-at{ name: "time" }
       = TIMES.each do |text, value|
         %option{ value: value }= text
 

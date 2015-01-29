@@ -1,0 +1,7 @@
+body {
+  margin: 10px 50px
+}
+
+#expire-at {
+  display: none;
+}
