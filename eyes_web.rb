@@ -19,10 +19,18 @@ class EyesWeb < Sinatra::Base
     # Generate key
     # Then encrypt
     store.save "akey", params[:secret]
-    redirect '/share'
+
+    # Generate url with key
+    url = "http://localhost:9393/read/akey"
+
+    haml :share, locals: { url: url }
   end
 
-  get '/share' do
-    "A link should have been here..."
+  get "/read/:key" do
+    note = store.fetch params[:key]
+
+    # Decrypt...
+
+    haml :note, locals: { note: note }
   end
 end
