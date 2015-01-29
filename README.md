@@ -5,6 +5,7 @@
 ## To Run
 
 `rake app:run`
+`open http://articulatedev.com:9393/`
 
 ## By
 
