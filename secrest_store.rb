@@ -8,12 +8,16 @@ class SecrestStore
     @redis = redis
   end
 
+  def encrypt(content)
+    BCrypt::Key.create(content)
+  end
+
   def save(key, value)
-    redis.set(key, value)
+    redis.set(key, encrypt(value))
   end
 
   def save_for_time(key, value, for_time:)
-    redis.save(key, value)
+    redis.save(key, encrypt(value))
     redis.expire(key, for_time)
   end
 

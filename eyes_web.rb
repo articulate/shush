@@ -5,10 +5,14 @@ require 'bcrypt'
 require_relative 'secrest_store'
 
 class EyesWeb < Sinatra::Base
+  include BCrypt
   def store
-    include BCrypt
-
     @store ||= SecrestStore.new
+  end
+
+  def key
+    o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+    (0...50).map { o[rand(o.length)] }.join
   end
 
   get '/' do
@@ -16,9 +20,7 @@ class EyesWeb < Sinatra::Base
   end
 
   post '/save' do
-    # Generate key
-    # Then encrypt
-    store.save "akey", params[:secret]
+    store.save key, params[:secret]
 
     # Generate url with key
     url = "http://localhost:9393/read/akey"
