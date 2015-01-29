@@ -1,6 +1,5 @@
 require 'sinatra/base'
 require 'byebug' if ENV['RACK_ENV'] == 'development'
-require 'bcrypt'
 
 require_relative 'secrest_store'
 
@@ -23,7 +22,7 @@ class EyesWeb < Sinatra::Base
     store.save key, params[:secret]
 
     # Generate url with key
-    url = "http://localhost:9393/read/akey"
+    url = "http://localhost:9393/read/#{key}"
 
     haml :share, locals: { url: url }
   end

@@ -1,4 +1,5 @@
 # It's a joke...
+require 'bcrypt'
 require 'redis'
 
 class SecrestStore
@@ -9,7 +10,7 @@ class SecrestStore
   end
 
   def encrypt(content)
-    BCrypt::Key.create(content)
+    BCrypt::Password.create(content)
   end
 
   def save(key, value)
