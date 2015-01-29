@@ -1,6 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    haml (4.0.6)
+      tilt
     kgio (2.9.3)
     rack (1.6.0)
     rack-protection (1.5.3)
@@ -24,6 +26,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  haml
   rake
   redis
   shotgun

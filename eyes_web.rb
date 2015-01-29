@@ -2,6 +2,6 @@ require 'sinatra/base'
 
 class EyesWeb < Sinatra::Base
   get '/' do
-    'Hello World!'
+    haml :input
   end
 end
