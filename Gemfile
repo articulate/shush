@@ -6,6 +6,7 @@ gem 'haml'
 gem 'redis'
 
 gem 'rake'
+gem 'bcrypt'
 
 group :development do
   gem 'shotgun'
