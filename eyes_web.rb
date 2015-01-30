@@ -10,11 +10,10 @@ end
 require_relative "secrest_store"
 
 TIMES = {
-  "1 week" => 10080,
-  "1 day" => 1440,
-  "1 hour" => 60,
   "10 minutes" => 10,
-  "1 minute" => 1,
+  "1 hour"     => 60,
+  "1 day"      => 1440,
+  "1 week"     => 10080,
 }
 
 class EyesWeb < Sinatra::Base
