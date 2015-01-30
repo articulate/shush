@@ -37,6 +37,10 @@ class SecrestStore
     cryptor.decrypt(content)
   end
 
+  def exists?(key)
+    redis.exists key
+  end
+
   def destroy(key)
     redis.del(key)
   end

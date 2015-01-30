@@ -1,7 +1,10 @@
-require "sinatra/base"
-require "cryptor"
-require "cryptor/symmetric_encryption/ciphers/xsalsa20poly1305"
-require "byebug" if ENV["RACK_ENV"] == "development"
+require 'json'
+require 'sinatra/base'
+require "sinatra/content_for"
+require 'cryptor'
+require 'cryptor/symmetric_encryption/ciphers/xsalsa20poly1305'
+
+require 'byebug' if ENV['RACK_ENV'] == 'development'
 
 if ENV["RACK_ENV"] == "production"
   require "rack/ssl-enforcer"
@@ -17,6 +20,8 @@ TIMES = {
 }
 
 class EyesWeb < Sinatra::Base
+  helpers Sinatra::ContentFor
+
   configure :development, :test do
     set :host, "articulatedev.com:9393"
     set :force_ssl, false
@@ -55,11 +60,22 @@ class EyesWeb < Sinatra::Base
     haml :share, locals: { url: url, time: TIMES.key(params[:time].to_i) }
   end
 
+  get "/read/not_found" do
+    "That note doesn't exist!"
+  end
+
   get "/read/:key" do
     key = params[:key]
-    note = store.fetch(key)
 
-    return 404 unless note
+    redirect "/read/not_found" unless store.exists?(key)
+
+    haml :note, locals: { key: key }
+  end
+
+  # JSON fetch
+  get "/note/:key" do
+    key = params[:key]
+    note = store.fetch(key)
 
     if store.auto_expire?(key)
       ttl = store.expires_in(key)
@@ -67,11 +83,13 @@ class EyesWeb < Sinatra::Base
       store.destroy(key)
     end
 
-    haml :note, locals: { note: note, ttl: ttl }
+    content_type :json
+    { note: note, ttl: ttl }.to_json
+  end
   end
 
   not_found do
-    "That note does not exist!"
+    "\"You don't belong here.\" -Radiohead"
   end
 end
 

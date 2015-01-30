@@ -7,6 +7,7 @@ gem "rake"
 gem "rbnacl-libsodium"
 gem "redis"
 gem "sinatra"
+gem "sinatra-contrib"
 
 group :development do
   gem "byebug"

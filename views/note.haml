@@ -1,9 +1,9 @@
 %h2 Here's your note
 
-#note
-  %pre= note
+%pre#note{ data: { nid: key } }
 
-- if ttl
-  %p= "This note will be destroyed in #{ttl} minutes."
-- else
-  %p This note will be destroyed once you close this window. Make sure you don't need it again!
+%p#ttl
+  This note will be destroyed once you close this window. Make sure you don't need it again!
+
+- content_for :js do
+  %script{ src: "/reading.js" }

@@ -19,6 +19,8 @@ GEM
     rack-protection (1.5.3)
       rack
     rack-ssl-enforcer (0.2.8)
+    rack-test (0.6.3)
+      rack (>= 1.0)
     rake (10.4.2)
     rbnacl (3.1.2)
       ffi
@@ -31,6 +33,13 @@ GEM
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
+    sinatra-contrib (1.4.2)
+      backports (>= 2.0)
+      multi_json
+      rack-protection
+      rack-test
+      sinatra (~> 1.4.0)
+      tilt (~> 1.3)
     slop (3.6.0)
     tilt (1.4.1)
 
@@ -48,3 +57,4 @@ DEPENDENCIES
   redis
   shotgun
   sinatra
+  sinatra-contrib

@@ -20,3 +20,6 @@
       = TIMES.each do |text, value|
         %option{ value: value }= text
 
+
+- content_for :js do
+  %script{ src: "/authoring.js" }
