@@ -86,10 +86,8 @@ class EyesWeb < Sinatra::Base
     content_type :json
     { note: note, ttl: ttl }.to_json
   end
-  end
 
   not_found do
     "\"You don't belong here.\" -Radiohead"
   end
 end
-
