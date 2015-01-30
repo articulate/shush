@@ -1,4 +1,6 @@
 require 'sinatra/base'
+require 'cryptor'
+require 'cryptor/symmetric_encryption/ciphers/xsalsa20poly1305'
 require 'byebug' if ENV['RACK_ENV'] == 'development'
 
 require_relative 'secrest_store'
@@ -16,9 +18,8 @@ class EyesWeb < Sinatra::Base
     @store ||= SecrestStore.new
   end
 
-  def generate_key
-    o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
-    (0...50).map { o[rand(o.length)] }.join
+  def encryption_key
+    Cryptor::SymmetricEncryption.random_key(:xsalsa20poly1305)
   end
 
   get '/' do
@@ -26,25 +27,25 @@ class EyesWeb < Sinatra::Base
   end
 
   post '/save' do
-    key = generate_key
-    store.save key, params[:secret]
+    key = encryption_key
+    store.save(key, params[:secret])
     store.expire_in_minutes(key, params[:time]) if params[:expire] == 'time'
 
     # Generate url with key
-    url = "http://localhost:9393/read/#{key}"
+    url = "http://localhost:9393/read/#{store.fingerprint(key)}"
     haml :share, locals: { url: url, time: TIMES.key(params[:time].to_i) }
   end
 
   get "/read/:key" do
     key = params[:key]
-    note = store.fetch key
+    note = store.fetch(key)
 
     return 404 unless note
 
     if store.auto_expire?(key)
       ttl = store.expires_in(key)
     else
-      store.destroy key
+      store.destroy(key)
     end
 
     # Decrypt...
@@ -55,5 +56,5 @@ class EyesWeb < Sinatra::Base
   not_found do
     'That note does not exist!'
   end
-
 end
+

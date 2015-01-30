@@ -1,21 +1,28 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    bcrypt (3.1.10)
     byebug (3.5.1)
       columnize (~> 0.8)
       debugger-linecache (~> 1.2)
       slop (~> 3.6)
     columnize (0.9.0)
+    cryptor (1.1.1)
+      ordo (>= 0.0.2)
     debugger-linecache (1.2.0)
+    ffi (1.9.6)
     haml (4.0.6)
       tilt
     kgio (2.9.3)
+    ordo (0.0.2)
     rack (1.6.0)
     rack-protection (1.5.3)
       rack
     raindrops (0.13.0)
     rake (10.4.2)
+    rbnacl (3.1.2)
+      ffi
+    rbnacl-libsodium (1.0.1)
+      rbnacl (~> 3.0, >= 3.0.1)
     redis (3.2.0)
     shotgun (0.9)
       rack (>= 1.0)
@@ -34,10 +41,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bcrypt
   byebug
+  cryptor
   haml
   rake
+  rbnacl-libsodium
   redis
   shotgun
   sinatra

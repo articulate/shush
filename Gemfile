@@ -6,7 +6,9 @@ gem 'haml'
 gem 'redis'
 
 gem 'rake'
-gem 'bcrypt'
+
+gem 'cryptor'
+gem 'rbnacl-libsodium'
 
 group :development do
   gem 'shotgun'
