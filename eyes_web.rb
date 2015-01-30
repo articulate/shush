@@ -15,8 +15,18 @@ TIMES = {
 
 
 class EyesWeb < Sinatra::Base
-  host = ENV["HOST"] || "http://articulatedev.com:9393"
-  set :redis_url, (ENV["REDISTOGO_URL"] || "redis://articulatedev.com:6379")
+
+  configure :development, :test do
+    set :host, 'articulatedev.com:9393'
+    set :force_ssl, false
+    set :redis_url, "redis://articulatedev.com:6379"
+  end
+
+  configure :production do
+    set :host, 'shush.articulate.com'
+    set :force_ssl, true
+    set :redis_url, ENV["REDISTOGO_URL"]
+  end
 
   def store
     @store ||= SecrestStore.new(Redis.new(url: settings.redis_url))
@@ -36,7 +46,7 @@ class EyesWeb < Sinatra::Base
     store.expire_in_minutes(key, params[:time]) if params[:expire] == 'time'
 
     # Generate url with key
-    url = "#{host}/read/#{store.fingerprint(key)}"
+    url = "#{settings.host}/read/#{store.fingerprint(key)}"
     haml :share, locals: { url: url, time: TIMES.key(params[:time].to_i) }
   end
 
