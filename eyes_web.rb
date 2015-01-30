@@ -14,7 +14,7 @@ TIMES = {
 }
 
 class EyesWeb < Sinatra::Base
-  set :redis_url, (ENV["REDISTOGO_URL"] || "redis://localhost:3679")
+  set :redis_url, (ENV["REDISTOGO_URL"] || "redis://localhost:6379")
 
   def store
     @store ||= SecrestStore.new(Redis.new(url: settings.redis_url))
