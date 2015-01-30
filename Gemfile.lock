@@ -1,5 +1,7 @@
-PATH
-  remote: ../ruby-core
+GIT
+  remote: git://github.com/plukevdh/ruby-core.git
+  revision: cc56899ad40af9429399071d1437e1b7d698b751
+  branch: keybase-api-updates
   specs:
     keybase-core (0.1.4)
       faraday (~> 0.9.0)
