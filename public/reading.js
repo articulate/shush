@@ -4,7 +4,7 @@ $(document).ready(function() {
 
   $.ajax("/note/" + $note.data('nid'), {contentType: "application/json"})
     .done(function(data) {
-      $note.text(data.note).show('fast');
+      $note.text(data.note);
       if(data.ttl) { $ttl.text("This note will be destroyed in " + data.ttl + " minutes."); }
 
     }).fail(function(xhr, status, error) {
