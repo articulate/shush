@@ -31,6 +31,8 @@ class SecrestStore
 
   def fetch(key)
     content = redis.get(key)
+    return false if content.nil?
+
     cryptor = Cryptor::SymmetricEncryption.new("secret.key:///xsalsa20poly1305;#{key}")
     cryptor.decrypt(content)
   end
