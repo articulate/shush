@@ -1,20 +1,18 @@
 source "https://rubygems.org"
 
-gem 'sinatra'
-gem 'haml'
-
-gem 'redis'
-
-gem 'rake'
-
-gem 'cryptor'
-gem 'rbnacl-libsodium'
+gem "cryptor"
+gem "haml"
+gem "rack-ssl-enforcer"
+gem "rake"
+gem "rbnacl-libsodium"
+gem "redis"
+gem "sinatra"
 
 group :development do
-  gem 'shotgun'
-  gem 'byebug'
+  gem "byebug"
+  gem "shotgun"
 end
 
 group :production do
-  gem 'puma'
+  gem "puma"
 end

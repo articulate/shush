@@ -18,6 +18,7 @@ GEM
     rack (1.6.0)
     rack-protection (1.5.3)
       rack
+    rack-ssl-enforcer (0.2.8)
     rake (10.4.2)
     rbnacl (3.1.2)
       ffi
@@ -41,6 +42,7 @@ DEPENDENCIES
   cryptor
   haml
   puma
+  rack-ssl-enforcer
   rake
   rbnacl-libsodium
   redis
