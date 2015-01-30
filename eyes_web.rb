@@ -52,12 +52,17 @@ class EyesWeb < Sinatra::Base
   post "/save" do
     key = encryption_key
     store.save(key, params[:secret])
-    store.expire_in_minutes(key, params[:time]) if params[:expire] == "time"
+
+    is_timed = params[:expire] == "time"
+
+    store.expire_in_minutes(key, params[:time]) if is_timed
+    time = is_timed ? TIMES.key(params[:time].to_i) : nil
 
     # Generate url with key
     protocol = settings.force_ssl? ? "https" : "http"
     url = "#{protocol}://#{settings.host}/read/#{store.fingerprint(key)}"
-    haml :share, locals: { url: url, time: TIMES.key(params[:time].to_i) }
+
+    haml :share, locals: { url: url, time: time }
   end
 
   get "/read/not_found" do
