@@ -9,8 +9,7 @@ gem "redis"
 gem "sinatra"
 gem "sinatra-contrib"
 
-# gem 'keybase-core', github: "plukevdh/ruby-core", branch: "keybase-api-updates", require: 'keybase-core'
-gem 'keybase-core', path: '../ruby-core'
+gem 'keybase-core', github: "plukevdh/ruby-core", branch: "keybase-api-updates"
 
 group :development do
   gem "byebug"
