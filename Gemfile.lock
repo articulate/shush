@@ -12,12 +12,12 @@ GEM
     ffi (1.9.6)
     haml (4.0.6)
       tilt
-    kgio (2.9.3)
     ordo (0.0.2)
+    puma (2.11.0)
+      rack (>= 1.1, < 2.0)
     rack (1.6.0)
     rack-protection (1.5.3)
       rack
-    raindrops (0.13.0)
     rake (10.4.2)
     rbnacl (3.1.2)
       ffi
@@ -32,10 +32,6 @@ GEM
       tilt (~> 1.3, >= 1.3.4)
     slop (3.6.0)
     tilt (1.4.1)
-    unicorn (4.8.3)
-      kgio (~> 2.6)
-      rack
-      raindrops (~> 0.7)
 
 PLATFORMS
   ruby
@@ -44,9 +40,9 @@ DEPENDENCIES
   byebug
   cryptor
   haml
+  puma
   rake
   rbnacl-libsodium
   redis
   shotgun
   sinatra
-  unicorn
