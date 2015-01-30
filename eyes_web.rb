@@ -18,7 +18,6 @@ TIMES = {
 }
 
 class EyesWeb < Sinatra::Base
-
   configure :development, :test do
     set :host, "articulatedev.com:9393"
     set :force_ssl, false
@@ -31,8 +30,11 @@ class EyesWeb < Sinatra::Base
     set :redis_url, ENV["REDISTOGO_URL"]
   end
 
+  set :redis, Redis.new(url: settings.redis_url)
+  set :store, SecrestStore.new(settings.redis)
+
   def store
-    @store ||= SecrestStore.new(Redis.new(url: settings.redis_url))
+    settings.store
   end
 
   def encryption_key
