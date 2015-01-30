@@ -1,7 +1,7 @@
 # It's a joke...
-require 'cryptor'
-require 'cryptor/symmetric_encryption/ciphers/xsalsa20poly1305'
-require 'redis'
+require "cryptor"
+require "cryptor/symmetric_encryption/ciphers/xsalsa20poly1305"
+require "redis"
 
 class SecrestStore
   attr_reader :redis

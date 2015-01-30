@@ -1,13 +1,13 @@
-require 'sinatra/base'
-require 'cryptor'
-require 'cryptor/symmetric_encryption/ciphers/xsalsa20poly1305'
-require 'byebug' if ENV['RACK_ENV'] == 'development'
+require "sinatra/base"
+require "cryptor"
+require "cryptor/symmetric_encryption/ciphers/xsalsa20poly1305"
+require "byebug" if ENV["RACK_ENV"] == "development"
 
 if ENV["RACK_ENV"] == "production"
   require "rack/ssl-enforcer"
 end
 
-require_relative 'secrest_store'
+require_relative "secrest_store"
 
 TIMES = {
   "1 week" => 10080,
@@ -20,13 +20,13 @@ TIMES = {
 class EyesWeb < Sinatra::Base
 
   configure :development, :test do
-    set :host, 'articulatedev.com:9393'
+    set :host, "articulatedev.com:9393"
     set :force_ssl, false
     set :redis_url, "redis://articulatedev.com:6379"
   end
 
   configure :production do
-    set :host, 'shush.articulate.com'
+    set :host, "shush.articulate.com"
     set :force_ssl, true
     set :redis_url, ENV["REDISTOGO_URL"]
   end
@@ -39,14 +39,14 @@ class EyesWeb < Sinatra::Base
     Cryptor::SymmetricEncryption.random_key(:xsalsa20poly1305)
   end
 
-  get '/' do
+  get "/" do
     haml :input
   end
 
-  post '/save' do
+  post "/save" do
     key = encryption_key
     store.save(key, params[:secret])
-    store.expire_in_minutes(key, params[:time]) if params[:expire] == 'time'
+    store.expire_in_minutes(key, params[:time]) if params[:expire] == "time"
 
     # Generate url with key
     protocol = settings.force_ssl? ? "https" : "http"
@@ -70,7 +70,7 @@ class EyesWeb < Sinatra::Base
   end
 
   not_found do
-    'That note does not exist!'
+    "That note does not exist!"
   end
 end
 

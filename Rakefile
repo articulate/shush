@@ -1,7 +1,6 @@
-
 namespace :app do
-  desc 'Run teh app'
+  desc "Run teh app"
   task :run do
-    exec 'shotgun config.ru'
+    exec "shotgun config.ru"
   end
 end
