@@ -3,6 +3,10 @@ require 'cryptor'
 require 'cryptor/symmetric_encryption/ciphers/xsalsa20poly1305'
 require 'byebug' if ENV['RACK_ENV'] == 'development'
 
+if ENV["RACK_ENV"] == "production"
+  require "rack/ssl-enforcer"
+end
+
 require_relative 'secrest_store'
 
 TIMES = {
@@ -12,7 +16,6 @@ TIMES = {
   "10 minutes" => 10,
   "1 minute" => 1,
 }
-
 
 class EyesWeb < Sinatra::Base
 
@@ -46,7 +49,7 @@ class EyesWeb < Sinatra::Base
     store.expire_in_minutes(key, params[:time]) if params[:expire] == 'time'
 
     # Generate url with key
-    url = "#{settings.host}/read/#{store.fingerprint(key)}"
+    url = "#{rack.url_scheme}://#{settings.host}/read/#{store.fingerprint(key)}"
     haml :share, locals: { url: url, time: TIMES.key(params[:time].to_i) }
   end
 
