@@ -1,5 +1,6 @@
 require 'json'
 require 'sinatra/base'
+require 'keybase-core'
 require "sinatra/content_for"
 require 'cryptor'
 require 'cryptor/symmetric_encryption/ciphers/xsalsa20poly1305'
@@ -90,6 +91,16 @@ class EyesWeb < Sinatra::Base
 
     content_type :json
     { note: note, ttl: ttl }.to_json
+  end
+
+  get "/keybase" do
+    haml :keybase_auth
+  end
+
+  post "/keybase" do
+    me = Keybase::Core::User.login(params[:username], params[:password])
+    byebug
+    redirect "/"
   end
 
   not_found do
