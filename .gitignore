@@ -24,3 +24,4 @@ build/
 /.bundle/
 /lib/bundler/man/
 
+dump.rdb

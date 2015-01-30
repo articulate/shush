@@ -15,7 +15,10 @@ TIMES = {
 
 class EyesWeb < Sinatra::Base
   def store
-    @store ||= SecrestStore.new
+    @store ||= begin
+      redis = Redis.new(url: (ENV["REDISTOGO_URL"] || "redis://localhost:3679")
+      @store ||= SecrestStore.new redis
+    end
   end
 
   def encryption_key
@@ -47,8 +50,6 @@ class EyesWeb < Sinatra::Base
     else
       store.destroy(key)
     end
-
-    # Decrypt...
 
     haml :note, locals: { note: note, ttl: ttl }
   end

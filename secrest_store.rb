@@ -6,7 +6,7 @@ require 'redis'
 class SecrestStore
   attr_reader :redis
 
-  def initialize(redis=Redis.new)
+  def initialize(redis=Redis.new(host: ENV["REDISTOGO_URL"]))
     @redis = redis
   end
 
