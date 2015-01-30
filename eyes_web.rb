@@ -66,7 +66,7 @@ class EyesWeb < Sinatra::Base
   end
 
   get "/read/not_found" do
-    "That note doesn't exist!"
+    haml :four_oh_four
   end
 
   get "/read/:key" do
