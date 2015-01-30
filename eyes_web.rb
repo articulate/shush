@@ -49,7 +49,8 @@ class EyesWeb < Sinatra::Base
     store.expire_in_minutes(key, params[:time]) if params[:expire] == 'time'
 
     # Generate url with key
-    url = "#{rack.url_scheme}://#{settings.host}/read/#{store.fingerprint(key)}"
+    protocol = settings.force_ssl? ? "https" : "http"
+    url = "#{protocol}://#{settings.host}/read/#{store.fingerprint(key)}"
     haml :share, locals: { url: url, time: TIMES.key(params[:time].to_i) }
   end
 
