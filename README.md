@@ -1,4 +1,4 @@
-# For Your :eyes: Only
+# Shush
 
 ### A Privnote Replacement
 
