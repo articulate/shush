@@ -13,9 +13,9 @@ TIMES = {
   "1 minute" => 1,
 }
 
-host = ENV["HOST"] || "http://articulatedev.com:9393"
 
 class EyesWeb < Sinatra::Base
+  @host = ENV["HOST"] || "http://articulatedev.com:9393"
   set :redis_url, (ENV["REDISTOGO_URL"] || "redis://articulatedev.com:6379")
 
   def store
@@ -36,7 +36,7 @@ class EyesWeb < Sinatra::Base
     store.expire_in_minutes(key, params[:time]) if params[:expire] == 'time'
 
     # Generate url with key
-    url = "#{host}/read/#{store.fingerprint(key)}"
+    url = "#{@host}/read/#{store.fingerprint(key)}"
     haml :share, locals: { url: url, time: TIMES.key(params[:time].to_i) }
   end
 
