@@ -5,16 +5,16 @@
     %textarea#note.form-control{ name: "secret", rows: "3" }
     %input.btn.btn-default{ type: :submit, value: "Save" }
 
-  %label{ for: "options" } Expire Message
+  %label{ for: "options" } This message will self-destruct...
   #options.form-group
     .radio
       %label
         %input.radio#expire-read{ type: "radio", name: "expire", value: :read, checked: :checked }
-        On Read
+        when it's first viewed
     .radio
       %label
         %input.radio#expire-time{ type: "radio", name: "expire", value: :time }
-        At Time
+        at a specified time
 
     %select.form-control#expire-at{ name: "time" }
       = TIMES.each do |text, value|

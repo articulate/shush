@@ -1,8 +1,9 @@
-%h2 Here's your YURL
+- expiration = time ? "in #{time}" : "when read"
+
+%p
+  Here's a link you can share that will expire
+  = "#{expiration}."
+  Or
+  %a{ href: url} destroy it right now.
 
 %input.form-control{ type: "text", value: url, onclick: "this.focus();this.select();" }
-
-- if time
-  %p= "This link will expire in #{time}."
-- else
-  %p= "This link will expire when read."
