@@ -42,7 +42,7 @@ class EyesWeb < Sinatra::Base
                              secret:       settings.session_secret
 
   use OmniAuth::Builder do
-    provider :google_oauth2, ENV["CLIENT_ID"], ENV["CLIENT_SECRET"]
+    provider :google_oauth2, ENV["GOOGLE_KEY"], ENV["GOOGLE_SECRET"]
   end
 
   def store
