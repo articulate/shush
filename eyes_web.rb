@@ -18,7 +18,7 @@ class EyesWeb < Sinatra::Base
   helpers Sinatra::ContentFor
   include ActionView::Helpers::DateHelper
 
-  set :session_secret, ENV["SESSION_SECRET"]
+  set :session_secret, ENV["SESSION_SECRET"] || "7b6384f3d5d45660678bff0b21229cf787ad008bfe48d1519e1b55a539cac5fd394420e2f97a985d47b77d5f27320b92516aa63042bc711402878f35dd039bba" #whatever
 
   # Enable sinatra sessions
   use Rack::Session::Cookie, key:          "_rack_session",
@@ -95,6 +95,10 @@ class EyesWeb < Sinatra::Base
       note: data[:secret].force_encoding(Encoding::UTF_8),
       ttl: time_text(store.expires_in(fingerprint))
     }.to_json
+  end
+
+  get "/auth/:provider/callback" do
+    puts request.env['omniauth.auth']
   end
 end
 

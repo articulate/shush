@@ -7,8 +7,8 @@ class Crypt
   end
 
   # Share bit
+  #   0 = Closed (Articulate Only)
   #   1 = Open
-  #   0 = Articulate Only
 
   def initialize(key=self.class.random_key)
     @key = key
@@ -29,6 +29,6 @@ class Crypt
   end
 
   def decrypt(content)
-    @client.decrypt content
+    @client.decrypt(content)
   end
 end
