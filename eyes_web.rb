@@ -18,13 +18,7 @@ class EyesWeb < Sinatra::Base
   helpers Sinatra::ContentFor
   include ActionView::Helpers::DateHelper
 
-  set :session_secret, ENV["SESSION_SECRET"] || "7b6384f3d5d45660678bff0b21229cf787ad008bfe48d1519e1b55a539cac5fd394420e2f97a985d47b77d5f27320b92516aa63042bc711402878f35dd039bba" #whatever
-
-  # Enable sinatra sessions
-  use Rack::Session::Cookie, key:          "_rack_session",
-                             path:         "/",
-                             expire_after: 2592000, # In seconds
-                             secret:       settings.session_secret
+  set :session_secret, ENV["SESSION_SECRET"] || "7b6384f3d5d45660678bff0b21229cf787ad008bfe48d1519e1b55a539cac5fd394420e2f97a985d47b77d5f27320b92516aa63042bc711402878f35dd039bba"
 
   configure :development, :test do
     set :host, "articulatedev.com:9393"
@@ -40,6 +34,16 @@ class EyesWeb < Sinatra::Base
 
   set :redis, Redis.new(url: settings.redis_url)
   set :store, SecrestStore.new(settings.redis)
+
+  use Rack::SslEnforcer if ENV["RACK_ENV"] == "production"
+  use Rack::Session::Cookie, key:          "_rack_session",
+                             path:         "/",
+                             expire_after: 2592000, # In seconds
+                             secret:       settings.session_secret
+
+  use OmniAuth::Builder do
+    provider :google_oauth2, ENV["CLIENT_ID"], ENV["CLIENT_SECRET"]
+  end
 
   def store
     settings.store
