@@ -2,11 +2,8 @@
 
 %pre#note{ data: { nid: key } } ...
 
-#ttl
-
-.panel.panel-default
-  .panel-body
-    If it's important, save this note somewhere secure. Once the note expires, we can't retrieve it for you.
+%p#ttl
+  This note has been destroyed. If it's important, save it somewhere secure. Once you close this window, we can't retrieve it for you.
 
 - content_for :js do
   %script{ src: "/reading.js" }
