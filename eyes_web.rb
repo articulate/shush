@@ -99,7 +99,6 @@ class EyesWeb < Sinatra::Base
 
   post "/keybase" do
     me = Keybase::Core::User.login(params[:username], params[:password])
-    byebug
     redirect "/"
   end
 
