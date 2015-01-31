@@ -12,10 +12,12 @@ TIMES = {
 DATA_KEYS = %i[
   secret
   is_ttl
+  org_only
 ]
 
 class SecrestStore
   attr_reader :redis
+  attr_accessor :access_token, :domain
 
   MAX_TTL = TIMES.values.max
 
@@ -27,12 +29,16 @@ class SecrestStore
     Crypt.new.encrypt(content)
   end
 
-  def save(secret, ttl:)
+  def save(secret, ttl:, org_only:)
     crypt = Crypt.new
     key = crypt.fingerprint
     value = crypt.encrypt(secret)
 
-    redis.mapped_hmset key, format_data(value, is_ttl: !ttl.nil?)
+    data = format_data(value,
+      is_ttl: !ttl.nil?,
+      org_only: org_only)
+
+    redis.mapped_hmset key, data
     set_expire key, (ttl || MAX_TTL)
 
     key
@@ -48,11 +54,13 @@ class SecrestStore
     crypt = Crypt.from_fingerprint(key)
     unsecret = crypt.decrypt(content[:secret])
 
-    format_data unsecret, is_ttl: is_ttl
+    format_data unsecret,
+      is_ttl: is_ttl,
+      org_only: bool(content[:org_only])
   end
 
   def exists?(key)
-    redis.exists key
+    redis.exists(key)
   end
 
   def destroy(key)
@@ -68,6 +76,10 @@ class SecrestStore
     bool redis.hget(key, :is_ttl)
   end
 
+  def org_only?(key)
+    bool redis.hget(key, :org_only)
+  end
+
   private
 
   # forces text keys from redis into booleans
@@ -75,10 +87,11 @@ class SecrestStore
     val == "true"
   end
 
-  def format_data(secret, is_ttl: false)
+  def format_data(secret, is_ttl: false, org_only: false)
     {
       secret: secret,
-      is_ttl: is_ttl
+      is_ttl: is_ttl,
+      org_only: org_only
     }
   end
 

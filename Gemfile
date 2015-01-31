@@ -6,6 +6,7 @@ gem 'actionview'
 gem "cryptor"
 gem "haml"
 gem "redcarpet"
+gem "omniauth-google-oauth2"
 gem "rack-ssl-enforcer"
 gem "rake"
 gem "rbnacl-libsodium"

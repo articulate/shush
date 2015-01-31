@@ -5,7 +5,7 @@
     %textarea#note.form-control{ name: "secret", rows: "3" }
     %input.btn.btn-default{ type: :submit, value: "Save" }
 
-  %label{ for: "options" } This message will self-destruct...
+  %label{ for: "destruct-options" } This message will self-destruct...
   #options.form-group
     .radio
       %label
@@ -19,6 +19,17 @@
     %select.form-control#expire-at{ name: "time" }
       = TIMES.each do |text, value|
         %option{ value: value }= text
+
+  %label{ for: "share-options" } Who do you want to share this note with?
+  #options.form-group
+    .radio
+      %label
+        %input.radio#org{ type: "radio", name: "org_only", value: "true", checked: :checked }
+        Someone at Articulate
+    .radio
+      %label
+        %input.radio#expire-time{ type: "radio", name: "org_only", value: "false" }
+        Someone else
 
 - content_for :js do
   %script{ src: "/authoring.js" }

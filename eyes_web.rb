@@ -1,24 +1,30 @@
-require 'json'
-require 'sinatra/base'
+require "json"
+require "sinatra/base"
 require "sinatra/content_for"
-require 'cryptor'
-require 'cryptor/symmetric_encryption/ciphers/xsalsa20poly1305'
+require "cryptor"
+require "cryptor/symmetric_encryption/ciphers/xsalsa20poly1305"
+require "rack/ssl-enforcer" if ENV["RACK_ENV"] == "production"
 
 require 'active_support/core_ext/numeric/time'
 require 'action_view'
 require 'action_view/helpers'
 
-require 'byebug' if ENV['RACK_ENV'] == 'development'
-
-if ENV["RACK_ENV"] == "production"
-  require "rack/ssl-enforcer"
-end
+require "rack/ssl-enforcer" if ENV["RACK_ENV"] == "production"
+require "byebug" if ENV["RACK_ENV"] == "development"
 
 require_relative "secrest_store"
 
 class EyesWeb < Sinatra::Base
   helpers Sinatra::ContentFor
   include ActionView::Helpers::DateHelper
+
+  set :session_secret, ENV["SESSION_SECRET"]
+
+  # Enable sinatra sessions
+  use Rack::Session::Cookie, key:          "_rack_session",
+                             path:         "/",
+                             expire_after: 2592000, # In seconds
+                             secret:       settings.session_secret
 
   configure :development, :test do
     set :host, "articulatedev.com:9393"
@@ -62,10 +68,7 @@ class EyesWeb < Sinatra::Base
 
   post "/save" do
     time = timed?(params[:expire]) ? params[:time].to_i : nil
-    key = store.save(params[:secret], ttl: time)
-
-    # Generate url with key
-    protocol = settings.force_ssl? ? "https" : "http"
+    key = store.save(params[:secret], ttl: time, org_only: params[:org_only])
 
     haml :share, locals: { url: generate_share_url(key), time: time_text(time), key: key }
   end
@@ -93,8 +96,5 @@ class EyesWeb < Sinatra::Base
       ttl: time_text(store.expires_in(fingerprint))
     }.to_json
   end
-
-  not_found do
-    "\"You don't belong here.\" -Radiohead"
-  end
 end
+
