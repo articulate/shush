@@ -98,7 +98,7 @@ class EyesWeb < Sinatra::Base
   end
 
   post "/keybase" do
-    me = Keybase::Core::User.login(params[:username], params[:password])
+
     redirect "/"
   end
 
