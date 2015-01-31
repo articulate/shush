@@ -34,16 +34,17 @@ class EyesWeb < Sinatra::Base
     settings.store
   end
 
-  def encryption_key
-    Cryptor::SymmetricEncryption.random_key(:xsalsa20poly1305)
-  end
-
   def timed?(expire)
     params[:expire] == "time"
   end
 
   def time_text(time)
     TIMES.key(time.to_i)
+  end
+
+  def generate_share_url(fingerprint)
+    protocol = settings.force_ssl? ? "https" : "http"
+    url = "#{protocol}://#{settings.host}/read/#{fingerprint}"
   end
 
   get "/" do
@@ -55,39 +56,36 @@ class EyesWeb < Sinatra::Base
   end
 
   post "/save" do
-    key = encryption_key
-
     time = timed?(params[:expire]) ? params[:time].to_i : nil
-    store.save(key, params[:secret], ttl: time)
+    key = store.save(params[:secret], ttl: time)
 
     # Generate url with key
     protocol = settings.force_ssl? ? "https" : "http"
-    url = "#{protocol}://#{settings.host}/read/#{store.fingerprint(key)}"
 
-    haml :share, locals: { url: url, time: time_text(time) }
+    haml :share, locals: { url: generate_share_url(key), time: time_text(time) }
   end
 
   get "/read/not_found" do
     haml :four_oh_four
   end
 
-  get "/read/:key" do
-    key = params[:key]
+  get "/read/:fingerprint" do
+    fingerprint = params[:fingerprint]
 
-    redirect "/read/not_found" unless store.exists?(key)
+    redirect "/read/not_found" unless store.exists?(fingerprint)
 
-    haml :note, locals: { key: key }
+    haml :read, locals: { key: fingerprint }
   end
 
   # JSON fetch
-  get "/note/:key" do
-    key = params[:key]
-    note = store.fetch(key)
+  get "/note/:fingerprint" do
+    fingerprint = params[:fingerprint]
+    note = store.fetch(fingerprint)
 
-    if store.auto_expire?(key)
-      ttl = store.expires_in(key)
+    if store.auto_expire?(fingerprint)
+      ttl = store.expires_in(fingerprint)
     else
-      store.destroy(key)
+      store.destroy(fingerprint)
     end
 
     content_type :json

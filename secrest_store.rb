@@ -1,6 +1,5 @@
 # It's a joke...
-require "cryptor"
-require "cryptor/symmetric_encryption/ciphers/xsalsa20poly1305"
+require_relative 'crypt'
 require "redis"
 
 TIMES = {
@@ -19,31 +18,31 @@ class SecrestStore
     @redis = redis
   end
 
-  def encrypt(encryption_key, content)
-    cryptor = Cryptor::SymmetricEncryption.new(encryption_key)
-    cryptor.encrypt(content)
+  def encrypt(content)
+    Crypt.new.encrypt(content)
   end
 
-  def fingerprint(encryption_key)
-    fingerprint = encryption_key.to_secret_uri
-    fingerprint.split(";")[1] # get the unique bit
-  end
-
-  def save(encryption_key, value, ttl:)
+  def save(secret, ttl:)
     # ttl ||= MAX_TTL
+    crypt = Crypt.new
+    key = crypt.fingerprint
+    value = crypt.encrypt(secret)
+
     if ttl
-      redis.setex(fingerprint(encryption_key), to_seconds(ttl), encrypt(encryption_key, value))
+      redis.setex(key, to_seconds(ttl), value)
     else
-      redis.set(fingerprint(encryption_key), encrypt(encryption_key, value))
+      redis.set(key, value)
     end
+
+    key
   end
 
   def fetch(key)
     content = redis.get(key)
     return false if content.nil?
 
-    cryptor = Cryptor::SymmetricEncryption.new("secret.key:///xsalsa20poly1305;#{key}")
-    cryptor.decrypt(content)
+    crypt = Crypt.from_fingerprint(key)
+    crypt.decrypt(content)
   end
 
   def exists?(key)
