@@ -48,7 +48,7 @@ class EyesWeb < Sinatra::Base
   end
 
   get "/" do
-    haml :input
+    haml :write
   end
 
   get "/about" do
