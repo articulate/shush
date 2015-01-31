@@ -1,9 +1,8 @@
-%form{ action: "/save", method: "POST" }
-
+%form#input{ action: "/save", method: "POST" }
   #message.form-group
     %label{ for: "secret" } Message
     %textarea#note.form-control{ name: "secret", rows: "3" }
-    %input.btn.btn-default{ type: :submit, value: "Save" }
+    %input#save.btn.btn-default{ type: :submit, value: "Save" }
 
   %label{ for: "options" } This message will self-destruct...
   #options.form-group
@@ -20,6 +19,6 @@
       = TIMES.each do |text, value|
         %option{ value: value }= text
 
-
 - content_for :js do
+  %script{ src: "/vendor/triplesec.min.js"}
   %script{ src: "/authoring.js" }
