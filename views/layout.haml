@@ -9,8 +9,12 @@
     %link{ rel: "stylesheet", href: "/styles.css" }
 
   %body
-    %h1
-      %a{ href: "/" } Shush
+    %header
+      %h1#brand
+        %a{ href: "/" } Shush
+
+      %nav
+        %a{ href: "/about" } About
 
     #content
       = yield

@@ -49,6 +49,10 @@ class EyesWeb < Sinatra::Base
     haml :input
   end
 
+  get "/about" do
+    markdown :info, layout_engine: :haml
+  end
+
   post "/save" do
     key = encryption_key
     store.save(key, params[:secret])

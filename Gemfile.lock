@@ -28,6 +28,7 @@ GEM
       ffi
     rbnacl-libsodium (1.0.1)
       rbnacl (~> 3.0, >= 3.0.1)
+    redcarpet (3.2.2)
     redis (3.2.0)
     shotgun (0.9)
       rack (>= 1.0)
@@ -56,6 +57,7 @@ DEPENDENCIES
   rack-ssl-enforcer
   rake
   rbnacl-libsodium
+  redcarpet
   redis
   shotgun
   sinatra
