@@ -9,9 +9,6 @@ gem "redis"
 gem "sinatra"
 gem "sinatra-contrib"
 
-gem 'keybase-core', github: "plukevdh/ruby-core", branch: "keybase-api-updates"
-gem 'gpgme'
-
 group :development do
   gem "byebug"
   gem "shotgun"

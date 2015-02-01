@@ -1,6 +1,5 @@
 require 'json'
 require 'sinatra/base'
-require 'keybase-core'
 require "sinatra/content_for"
 require 'cryptor'
 require 'cryptor/symmetric_encryption/ciphers/xsalsa20poly1305'
