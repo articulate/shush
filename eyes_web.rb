@@ -84,6 +84,8 @@ class EyesWeb < Sinatra::Base
   get "/read/:fingerprint" do
     fingerprint = params[:fingerprint]
 
+    redirect "/auth/google_auth2" if fingerprint[-1] == "0"
+
     redirect "/read/not_found" unless store.exists?(fingerprint)
 
     haml :read, locals: { key: fingerprint }
@@ -99,6 +101,10 @@ class EyesWeb < Sinatra::Base
       note: data[:secret].force_encoding(Encoding::UTF_8),
       ttl: time_text(store.expires_in(fingerprint))
     }.to_json
+  end
+
+  get "/auth/:provider" do
+    puts request.env['omniauth.auth']
   end
 
   get "/auth/:provider/callback" do
