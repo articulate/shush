@@ -4,12 +4,12 @@ $(document).ready(function() {
     , $message = $('#note')
     , $url = $('#url')
     , $when = $('#when')
-    , $readSelect = $("#expire-read")
-    , $timeSelect = $("#expire-time")
+    , $expireSelects = $("#expire-read, #expire-time")
     , $times = $("#expire-at");
 
   function toggleTimeSelect(evt) {
-    $times.toggle($timeSelect.is(":checked"));
+    var isTimed = $(this).val() == 'time';
+    $times.toggle(isTimed);
   }
 
   function sendMessage(err, buff) {
@@ -48,8 +48,7 @@ $(document).ready(function() {
     }, sendMessage);
   }
 
-  $readSelect.on("click", toggleTimeSelect);
-  $timeSelect.on("click", toggleTimeSelect);
+  $expireSelects.on("click", toggleTimeSelect);
 
   $form.on('submit', function(evt) {
     evt.preventDefault();
