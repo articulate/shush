@@ -103,12 +103,9 @@ class EyesWeb < Sinatra::Base
     }.to_json
   end
 
-  get "/auth/:provider" do
-    puts request.env['omniauth.auth']
-  end
-
   get "/auth/:provider/callback" do
-    puts request.env['omniauth.auth']
+    content_type "text/plain"
+    request.env["omniauth.auth"].to_hash.inspect rescue "No Data"
   end
 end
 
