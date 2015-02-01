@@ -23,6 +23,7 @@ GEM
     cryptor (1.1.1)
       ordo (>= 0.0.2)
     debugger-linecache (1.2.0)
+    dotenv (1.0.2)
     erubis (2.7.0)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
@@ -109,6 +110,7 @@ DEPENDENCIES
   actionview
   byebug
   cryptor
+  dotenv
   haml
   omniauth-google-oauth2
   puma

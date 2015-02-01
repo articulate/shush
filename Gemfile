@@ -16,6 +16,7 @@ gem "sinatra-contrib"
 
 group :development do
   gem "byebug"
+  gem "dotenv"
   gem "shotgun"
 end
 

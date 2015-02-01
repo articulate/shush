@@ -25,5 +25,4 @@ build/
 /lib/bundler/man/
 
 dump.rdb
-
 .env
