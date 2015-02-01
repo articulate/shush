@@ -6,7 +6,7 @@ This is a thing to help send your secrests about the interwebs without fear of b
 
 ## Warnings
 
-While we do encrypt all messages and do no persistent data logging on the server, we do transmit data unecrypted to the server before performing the encryption. While this is behind SSL, we recommend _at least_ signing your messages using PGP or other mechanism (we like PGP because [keybase.io] makes it so easy to verify!). At **best** we recommend encrypting before you even paste the message in our text boxes. But that's entirely up to you.
+While we do encrypt all messages and do no persistent data logging on the server, we do transmit data unecrypted to the server before performing the encryption. While this is behind SSL, we recommend _at least_ signing your messages using PGP or other mechanism (we like PGP because [keybase.io](https://keybase.io) makes it so easy to verify!). At **best** we recommend encrypting before you even paste the message in our text boxes. But that's entirely up to you.
 
 ## Authors
 
