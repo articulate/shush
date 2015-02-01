@@ -84,9 +84,9 @@ class EyesWeb < Sinatra::Base
   get "/read/:fingerprint" do
     fingerprint = params[:fingerprint]
 
-    redirect "/auth/google_oauth2" if fingerprint[-1] == "0"
-
     redirect "/read/not_found" unless store.exists?(fingerprint)
+
+    redirect "/auth/google_oauth2" if fingerprint[-1] == "0"
 
     haml :read, locals: { key: fingerprint }
   end
@@ -105,7 +105,10 @@ class EyesWeb < Sinatra::Base
 
   get "/auth/:provider/callback" do
     content_type "text/plain"
-    request.env["omniauth.auth"].to_hash.inspect rescue "No Data"
+    response = request.env["omniauth.auth"].to_hash
+    response.inspect rescue "No Data"
+    domain = response["extra"]["raw_info"]["hd"]
+    puts params[:state] if domain == "articulate.com"
   end
 end
 
