@@ -42,7 +42,7 @@ class EyesWeb < Sinatra::Base
                              secret:       settings.session_secret
 
   use OmniAuth::Builder do
-    provider :google_oauth2, ENV["GOOGLE_KEY"], ENV["GOOGLE_SECRET"], prompt: "select_account"
+    provider :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"], { prompt: "select_account" }
   end
 
   def store
@@ -84,7 +84,7 @@ class EyesWeb < Sinatra::Base
   get "/read/:fingerprint" do
     fingerprint = params[:fingerprint]
 
-    redirect "/auth/google_auth2" if fingerprint[-1] == "0"
+    redirect "/auth/google_oauth2" if fingerprint[-1] == "0"
 
     redirect "/read/not_found" unless store.exists?(fingerprint)
 
