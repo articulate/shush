@@ -4,6 +4,8 @@
     %textarea#note.form-control{ name: "secret", rows: "3" }
     %input#save.btn.btn-default{ type: :submit, value: "Save" }
 
+  %pre#progress
+
   %label{ for: "options" } This message will self-destruct...
   #options.form-group
     .radio
@@ -19,6 +21,16 @@
       = TIMES.each do |text, value|
         %option{ value: value }= text
 
+#result
+  %p
+    Here's a link you can share that will expire
+    %span#when
+    Or
+    %a#destroy{ href: "/" } destroy it right now.
+
+  %input#url.form-control{ type: "text" }
+
 - content_for :js do
   %script{ src: "/vendor/triplesec.min.js"}
+  %script{ src: "/vendor/jquery.serialize-object.min.js" }
   %script{ src: "/authoring.js" }

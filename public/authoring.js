@@ -1,7 +1,9 @@
 $(document).ready(function() {
   var $form = $('form#input')
-  var $save = $('#save')
+    , $progress = $('#progress')
     , $message = $('#note')
+    , $url = $('#url')
+    , $when = $('#when')
     , $readSelect = $("#expire-read")
     , $timeSelect = $("#expire-time")
     , $times = $("#expire-at");
@@ -12,15 +14,30 @@ $(document).ready(function() {
 
   function sendMessage(err, buff) {
     if (!err) {
-      $message.val(buff.toString('hex'));
-      $form.submit();
+      var data = $form.serializeObject();
+      data.secret = buff.toString('hex');
+
+      $.post($form.attr('action'), data).done(showUrl);
     } else {
-      $message.val("Could not secrest");
+      alert("Could not Secrest this Secrest")
     }
   }
 
+  function showUrl(data) {
+    var timeText = data.time ? "in #{data.time}" : "when read";
+
+    $url.val(data.url);
+    $when.text(timeText)
+      .parents().show();
+    $form.hide();
+  }
+
   function progressReporter(obj) {
-    console.log(obj);
+    var what = obj.what
+      , i = obj.i
+      , total = obj.total;
+
+    console.log(what);
   }
 
   function encrypt(msg) {
@@ -34,11 +51,9 @@ $(document).ready(function() {
   $readSelect.on("click", toggleTimeSelect);
   $timeSelect.on("click", toggleTimeSelect);
 
-  $save.on('click', function(evt) {
+  $form.on('submit', function(evt) {
     evt.preventDefault();
     var msg = $message.val()
-
-    $message.val("Secresting...");
     encrypt(msg);
   });
 

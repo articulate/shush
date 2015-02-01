@@ -2,7 +2,6 @@ body {
   margin: 10px 50px
 }
 
-#expire-at {
+#expire-at, #result {
   display: none;
 }
-

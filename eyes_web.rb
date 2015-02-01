@@ -62,7 +62,8 @@ class EyesWeb < Sinatra::Base
     protocol = settings.force_ssl? ? "https" : "http"
     url = "#{protocol}://#{settings.host}/read/#{store.fingerprint(key)}"
 
-    haml :share, locals: { url: url, time: time }
+    content_type :json
+    { url: url, time: time }.to_json
   end
 
   get "/read/not_found" do
