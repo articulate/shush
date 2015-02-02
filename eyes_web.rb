@@ -12,13 +12,6 @@ end
 
 require_relative "secrest_store"
 
-TIMES = {
-  "10 minutes" => 10,
-  "1 hour"     => 60,
-  "1 day"      => 1440,
-  "1 week"     => 10080,
-}
-
 class EyesWeb < Sinatra::Base
   helpers Sinatra::ContentFor
 
@@ -45,6 +38,14 @@ class EyesWeb < Sinatra::Base
     Cryptor::SymmetricEncryption.random_key(:xsalsa20poly1305)
   end
 
+  def timed?(expire)
+    params[:expire] == "time"
+  end
+
+  def time_text(time)
+    TIMES.key(time.to_i)
+  end
+
   get "/" do
     haml :input
   end
@@ -55,18 +56,15 @@ class EyesWeb < Sinatra::Base
 
   post "/save" do
     key = encryption_key
-    store.save(key, params[:secret])
 
-    is_timed = params[:expire] == "time"
-
-    store.expire_in_minutes(key, params[:time]) if is_timed
-    time = is_timed ? TIMES.key(params[:time].to_i) : nil
+    time = timed?(params[:expire]) ? params[:time].to_i : nil
+    store.save(key, params[:secret], ttl: time)
 
     # Generate url with key
     protocol = settings.force_ssl? ? "https" : "http"
     url = "#{protocol}://#{settings.host}/read/#{store.fingerprint(key)}"
 
-    haml :share, locals: { url: url, time: time }
+    haml :share, locals: { url: url, time: time_text(time) }
   end
 
   get "/read/not_found" do
