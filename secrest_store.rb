@@ -30,8 +30,12 @@ class SecrestStore
   end
 
   def save(encryption_key, value, ttl:)
-    ttl ||= MAX_TTL
-    redis.setex(fingerprint(encryption_key), to_seconds(ttl), encrypt(encryption_key, value))
+    # ttl ||= MAX_TTL
+    if ttl
+      redis.setex(fingerprint(encryption_key), to_seconds(ttl), encrypt(encryption_key, value))
+    else
+      redis.set(fingerprint(encryption_key), encrypt(encryption_key, value))
+    end
   end
 
   def fetch(key)
@@ -69,4 +73,3 @@ class SecrestStore
     (time.to_f / 60).round(2)
   end
 end
-
