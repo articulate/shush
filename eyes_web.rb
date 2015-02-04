@@ -91,7 +91,7 @@ class EyesWeb < Sinatra::Base
     end
 
     content_type :json
-    { note: note, ttl: ttl }.to_json
+    { note: note.force_encoding(Encoding::UTF_8), ttl: ttl }.to_json
   end
 
   not_found do
