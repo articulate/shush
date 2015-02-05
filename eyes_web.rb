@@ -85,8 +85,7 @@ class EyesWeb < Sinatra::Base
     fingerprint = params[:fingerprint]
 
     redirect "/read/not_found" unless store.exists?(fingerprint)
-
-    redirect "/auth/google_oauth2" if fingerprint[-1] == "0"
+    redirect "/auth/google_oauth2" if store.org_only?(fingerprint)
 
     haml :read, locals: { key: fingerprint }
   end
