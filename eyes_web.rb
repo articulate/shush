@@ -4,6 +4,10 @@ require "sinatra/content_for"
 require 'cryptor'
 require 'cryptor/symmetric_encryption/ciphers/xsalsa20poly1305'
 
+require 'active_support/core_ext/numeric/time'
+require 'action_view'
+require 'action_view/helpers'
+
 require 'byebug' if ENV['RACK_ENV'] == 'development'
 
 if ENV["RACK_ENV"] == "production"
@@ -14,6 +18,7 @@ require_relative "secrest_store"
 
 class EyesWeb < Sinatra::Base
   helpers Sinatra::ContentFor
+  include ActionView::Helpers::DateHelper
 
   configure :development, :test do
     set :host, "articulatedev.com:9393"
