@@ -44,7 +44,7 @@ class EyesWeb < Sinatra::Base
   end
 
   def time_text(time)
-    TIMES.key(time.to_i)
+    (time && time > 0) ? "in #{time_ago_in_words(time.minutes.from_now)}" : "immediately"
   end
 
   def generate_share_url(fingerprint)
@@ -67,7 +67,7 @@ class EyesWeb < Sinatra::Base
     # Generate url with key
     protocol = settings.force_ssl? ? "https" : "http"
 
-    haml :share, locals: { url: generate_share_url(key), time: time_text(time) }
+    haml :share, locals: { url: generate_share_url(key), time: time_text(time), key: key }
   end
 
   get "/read/not_found" do
@@ -85,16 +85,13 @@ class EyesWeb < Sinatra::Base
   # JSON fetch
   get "/note/:fingerprint" do
     fingerprint = params[:fingerprint]
-    note = store.fetch(fingerprint)
-
-    if store.auto_expire?(fingerprint)
-      ttl = store.expires_in(fingerprint)
-    else
-      store.destroy(fingerprint)
-    end
+    data = store.fetch(fingerprint)
 
     content_type :json
-    { note: note.force_encoding(Encoding::UTF_8), ttl: ttl }.to_json
+    {
+      note: data[:secret].force_encoding(Encoding::UTF_8),
+      ttl: time_text(store.expires_in(fingerprint))
+    }.to_json
   end
 
   not_found do
