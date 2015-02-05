@@ -105,6 +105,13 @@ class EyesWeb < Sinatra::Base
     }.to_json
   end
 
+  get '/destroy/:key' do
+    store.destroy params[:key]
+
+    flash[:success] = "Secret has been destroyed!"
+    redirect "/"
+  end
+
   not_found do
     "\"You don't belong here.\" -Radiohead"
   end
