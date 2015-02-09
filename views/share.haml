@@ -1,9 +1,7 @@
-- expiration = time ? "in #{time}" : "when read"
-
 %p
   Here's a link you can share that will expire
-  = "#{expiration}."
-  Or
-  %a{ href: url} destroy it right now.
+  = time
+  or you can
+  %a{ href: url } destroy it right now.
 
 %input.form-control{ type: "text", value: url, onclick: "this.focus();this.select();" }

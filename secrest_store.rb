@@ -1,6 +1,5 @@
 # It's a joke...
-require "cryptor"
-require "cryptor/symmetric_encryption/ciphers/xsalsa20poly1305"
+require_relative 'crypt'
 require "redis"
 
 TIMES = {
@@ -9,6 +8,11 @@ TIMES = {
   "1 day"      => 1440,
   "1 week"     => 10080,
 }
+
+DATA_KEYS = %i[
+  secret
+  is_ttl
+]
 
 class SecrestStore
   attr_reader :redis
@@ -19,31 +23,32 @@ class SecrestStore
     @redis = redis
   end
 
-  def encrypt(encryption_key, content)
-    cryptor = Cryptor::SymmetricEncryption.new(encryption_key)
-    cryptor.encrypt(content)
+  def encrypt(content)
+    Crypt.new.encrypt(content)
   end
 
-  def fingerprint(encryption_key)
-    fingerprint = encryption_key.to_secret_uri
-    fingerprint.split(";")[1] # get the unique bit
-  end
+  def save(secret, ttl:)
+    crypt = Crypt.new
+    key = crypt.fingerprint
+    value = crypt.encrypt(secret)
 
-  def save(encryption_key, value, ttl:)
-    # ttl ||= MAX_TTL
-    if ttl
-      redis.setex(fingerprint(encryption_key), to_seconds(ttl), encrypt(encryption_key, value))
-    else
-      redis.set(fingerprint(encryption_key), encrypt(encryption_key, value))
-    end
+    redis.mapped_hmset key, format_data(value, is_ttl: !ttl.nil?)
+    set_expire key, (ttl || MAX_TTL)
+
+    key
   end
 
   def fetch(key)
-    content = redis.get(key)
+    content = redis.mapped_hmget(key, *DATA_KEYS)
     return false if content.nil?
 
-    cryptor = Cryptor::SymmetricEncryption.new("secret.key:///xsalsa20poly1305;#{key}")
-    cryptor.decrypt(content)
+    is_ttl = bool content[:is_ttl]
+    destroy(key) unless is_ttl
+
+    crypt = Crypt.from_fingerprint(key)
+    unsecret = crypt.decrypt(content[:secret])
+
+    format_data unsecret, is_ttl: is_ttl
   end
 
   def exists?(key)
@@ -60,10 +65,26 @@ class SecrestStore
   end
 
   def auto_expire?(key)
-    expires_in(key) >= 0
+    bool redis.hget(key, :is_ttl)
   end
 
   private
+
+  # forces text keys from redis into booleans
+  def bool(val)
+    val == "true"
+  end
+
+  def format_data(secret, is_ttl: false)
+    {
+      secret: secret,
+      is_ttl: is_ttl
+    }
+  end
+
+  def set_expire(key, time)
+    redis.expire key, to_seconds(time)
+  end
 
   def to_seconds(time)
     time * 60

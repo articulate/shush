@@ -2,7 +2,21 @@ body {
   margin: 10px 50px
 }
 
-#expire-at {
+#brand, nav {
+  display: inline-block;
+}
+
+#brand {
+  margin-right: 30px;
+}
+
+#expire-at, #ttl {
   display: none;
+}
+
+#ttl {
+  color: #f0ad4e;
+  margin: 15px;
+  /*padding: 15px;*/
 }
 
