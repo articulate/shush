@@ -1,6 +1,7 @@
 require 'json'
 require 'sinatra/base'
 require "sinatra/content_for"
+require 'rack-flash'
 require 'cryptor'
 require 'cryptor/symmetric_encryption/ciphers/xsalsa20poly1305'
 
@@ -19,6 +20,16 @@ require_relative "secrest_store"
 class EyesWeb < Sinatra::Base
   helpers Sinatra::ContentFor
   include ActionView::Helpers::DateHelper
+
+  FLASH_TYPES = %i[danger warning info success]
+
+  set :session_secret, ENV["SESSION_SECRET"]
+  use Rack::Session::Cookie, key:          "_rack_session",
+                             path:         "/",
+                             expire_after: 2592000, # In seconds
+                             secret:       settings.session_secret
+
+  use Rack::Flash, accessorize: FLASH_TYPES
 
   configure :development, :test do
     set :host, "articulatedev.com:9393"
@@ -92,6 +103,13 @@ class EyesWeb < Sinatra::Base
       note: data[:secret].force_encoding(Encoding::UTF_8),
       ttl: time_text(store.expires_in(fingerprint))
     }.to_json
+  end
+
+  get '/destroy/:key' do
+    store.destroy params[:key]
+
+    flash[:success] = "Secret has been destroyed!"
+    redirect "/"
   end
 
   not_found do

@@ -12,6 +12,7 @@ gem "rbnacl-libsodium"
 gem "redis"
 gem "sinatra"
 gem "sinatra-contrib"
+gem 'rack-flash3', github: 'treeder/rack-flash'
 
 group :development do
   gem "byebug"

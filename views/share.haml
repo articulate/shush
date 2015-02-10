@@ -2,6 +2,6 @@
   Here's a link you can share that will expire
   = time
   or you can
-  %a{ href: url } destroy it right now.
+  %a{ href: "/destroy/#{key}" } destroy it right now.
 
 %input.form-control{ type: "text", value: url, onclick: "this.focus();this.select();" }

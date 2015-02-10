@@ -15,6 +15,13 @@
       %nav
         %a{ href: "/about" } About
 
+    - FLASH_TYPES.each do |type|
+      - if flash.has?(type)
+        #flash.alert{ role: type, class: "alert-#{type}" }
+          %button.close{ data: { dismiss: type } }
+            %span &times;
+          = flash[type]
+
     #content
       = yield
 
