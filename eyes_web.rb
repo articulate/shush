@@ -82,7 +82,10 @@ class EyesWeb < Sinatra::Base
 
   post "/save" do
     time = timed?(params[:expire]) ? params[:time].to_i : nil
-    key = store.save(params[:secret], ttl: time)
+    key = store.save params[:secret],
+      ttl: time,
+      notify: !params[:notify].nil?,
+      email: params[:notify_email]
 
     # Generate url with key
     protocol = settings.force_ssl? ? "https" : "http"
@@ -106,6 +109,8 @@ class EyesWeb < Sinatra::Base
   get "/note/:fingerprint" do
     fingerprint = params[:fingerprint]
     data = store.fetch(fingerprint)
+
+    MailNotifier.notify_read(data[:email], fingerprint) if data[:request_notify]
 
     content_type :json
     {
