@@ -9,13 +9,16 @@ require 'active_support/core_ext/numeric/time'
 require 'action_view'
 require 'action_view/helpers'
 
-require 'byebug' if ENV['RACK_ENV'] == 'development'
-
 if ENV["RACK_ENV"] == "production"
   require "rack/ssl-enforcer"
+  require 'postmark'
+else
+  require 'byebug'
+  require "letter_opener"
 end
 
 require_relative "secrest_store"
+require_relative "mail_notifier"
 
 class EyesWeb < Sinatra::Base
   helpers Sinatra::ContentFor
@@ -35,16 +38,22 @@ class EyesWeb < Sinatra::Base
     set :host, "articulatedev.com:9393"
     set :force_ssl, false
     set :redis_url, "redis://articulatedev.com:6379"
+    set :mailer, [LetterOpener::DeliveryMethod, location: File.expand_path('../tmp/letter_opener', __FILE__)]
   end
 
   configure :production do
     set :host, "shush.articulate.com"
     set :force_ssl, true
     set :redis_url, ENV["REDISTOGO_URL"]
+    set :mailer, [Mail::Postmark, api_token: ENV['POSTMARK_API_TOKEN']]
   end
 
   set :redis, Redis.new(url: settings.redis_url)
   set :store, SecrestStore.new(settings.redis)
+
+  Mail.defaults do
+    delivery_method *EyesWeb.settings.mailer
+  end
 
   def store
     settings.store
