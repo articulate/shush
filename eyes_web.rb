@@ -110,7 +110,7 @@ class EyesWeb < Sinatra::Base
     fingerprint = params[:fingerprint]
     data = store.fetch(fingerprint)
 
-    MailNotifier.notify_read(data[:email], fingerprint) if data[:request_notify]
+    MailNotifier.notify_read(data[:email], fingerprint, is_ttl: data[:is_ttl]) if data[:request_notify]
 
     content_type :json
     {

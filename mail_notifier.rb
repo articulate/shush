@@ -4,19 +4,26 @@ class MailNotifier
   class << self
     FROM = "Shush <shush@articulate.com>"
 
-    def notify_read(email, link)
+    def notify_read(email, link, is_ttl:)
       message = Mail.new do
         to email
         from FROM
         subject "Shush: Message Read"
 
         text_part do
-          body "Your message (#{link}) was read and likely destroyed."
+          msg = "Your message (#{link}) was read"
+          msg += is_ttl ? "." : "and destroyed."
+
+          body msg
         end
 
         html_part do
+          msg = "<h2>Your message (<i>#{link}</i>) was read"
+          msg += is_ttl ? "." : " and destroyed."
+          msg += "</h2>"
+
           content_type 'text/html; charset=UTF-8'
-          body "<h2>Your message (<i>#{link}</i>) was read and likely destroyed.</h2>"
+          body msg
         end
       end
 
