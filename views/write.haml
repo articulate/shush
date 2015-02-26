@@ -20,13 +20,5 @@
       = TIMES.each do |text, value|
         %option{ value: value }= text
 
-    .checkbox
-      %label
-        %input#notify{ type: "checkbox", name: "notify" }
-        Email me when this note is read
-    #email
-      %label{ for: 'notify_email' } Email:
-      %input#notify-email{ name: "notify_email", placeholder: 'notify@email.com' }
-
 - content_for :js do
   %script{ src: "/authoring.js" }

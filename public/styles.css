@@ -10,7 +10,7 @@ body {
   margin-right: 30px;
 }
 
-#expire-at, #ttl, #email {
+#expire-at, #ttl {
   display: none;
 }
 
