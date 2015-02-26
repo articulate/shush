@@ -46,6 +46,10 @@ class EyesWeb < Sinatra::Base
   set :redis, Redis.new(url: settings.redis_url)
   set :store, SecrestStore.new(settings.redis)
 
+  Mail.defaults do
+    delivery_method *EyesWeb.settings.mailer
+  end
+
   def store
     settings.store
   end
