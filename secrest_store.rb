@@ -12,6 +12,8 @@ TIMES = {
 DATA_KEYS = %i[
   secret
   is_ttl
+  email
+  request_notify
 ]
 
 class SecrestStore
@@ -27,12 +29,15 @@ class SecrestStore
     Crypt.new.encrypt(content)
   end
 
-  def save(secret, ttl:)
+  def save(secret, ttl:, notify:, email:)
     crypt = Crypt.new
     key = crypt.fingerprint
     value = crypt.encrypt(secret)
 
-    redis.mapped_hmset key, format_data(value, is_ttl: !ttl.nil?)
+    redis.mapped_hmset key, format_data(value,
+      is_ttl: !ttl.nil?,
+      notify: notify,
+      email: email)
     set_expire key, (ttl || MAX_TTL)
 
     key
@@ -48,7 +53,10 @@ class SecrestStore
     crypt = Crypt.from_fingerprint(key)
     unsecret = crypt.decrypt(content[:secret])
 
-    format_data unsecret, is_ttl: is_ttl
+    format_data unsecret,
+      is_ttl: is_ttl,
+      notify: bool(content[:request_notify]),
+      email: content[:email]
   end
 
   def exists?(key)
@@ -75,10 +83,12 @@ class SecrestStore
     val == "true"
   end
 
-  def format_data(secret, is_ttl: false)
+  def format_data(secret, is_ttl: false, notify: false, email: nil)
     {
       secret: secret,
-      is_ttl: is_ttl
+      is_ttl: is_ttl,
+      request_notify: notify,
+      email: email
     }
   end
 
