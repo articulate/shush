@@ -1,6 +1,6 @@
 require 'json'
 require 'sinatra/base'
-require "sinatra/content_for"
+require "sinatra/contrib"
 require 'rack-flash'
 require 'cryptor'
 require 'cryptor/symmetric_encryption/ciphers/xsalsa20poly1305'
@@ -21,7 +21,8 @@ require_relative "secrest_store"
 require_relative "mail_notifier"
 
 class EyesWeb < Sinatra::Base
-  helpers Sinatra::ContentFor
+  register Sinatra::Contrib
+
   include ActionView::Helpers::DateHelper
 
   FLASH_TYPES = %i[danger warning info success]
@@ -80,7 +81,7 @@ class EyesWeb < Sinatra::Base
     markdown :info, layout_engine: :haml
   end
 
-  post "/save" do
+  post "/save", provides: [:html, :json] do
     time = timed?(params[:expire]) ? params[:time].to_i : nil
     key = store.save params[:secret],
       ttl: time,
@@ -90,7 +91,7 @@ class EyesWeb < Sinatra::Base
     # Generate url with key
     protocol = settings.force_ssl? ? "https" : "http"
 
-    haml :share, locals: { url: generate_share_url(key), time: time_text(time), key: key }
+    respond_with :share, { url: generate_share_url(key), time: time_text(time), key: key }
   end
 
   get "/read/not_found" do
