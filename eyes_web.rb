@@ -5,10 +5,6 @@ require 'rack-flash'
 require 'cryptor'
 require 'cryptor/symmetric_encryption/ciphers/xsalsa20poly1305'
 
-require 'active_support/core_ext/numeric/time'
-require 'action_view'
-require 'action_view/helpers'
-
 if ENV["RACK_ENV"] == "production"
   require "rack/ssl-enforcer"
   require 'postmark'
@@ -17,13 +13,12 @@ else
   require "letter_opener"
 end
 
+require_relative "objects/secrest"
 require_relative "secrest_store"
 require_relative "mail_notifier"
 
 class EyesWeb < Sinatra::Base
   register Sinatra::Contrib
-
-  include ActionView::Helpers::DateHelper
 
   FLASH_TYPES = %i[danger warning info success]
 
@@ -64,12 +59,12 @@ class EyesWeb < Sinatra::Base
     params[:token] == ENV['SLACK_TOKEN']
   end
 
-  def timed?(expire)
+  def timed?
     params[:expire] == "time"
   end
 
-  def time_text(time)
-    (time && time > 0) ? "in #{time_ago_in_words(time.minutes.from_now)}" : "immediately"
+  def notify_requested?
+    !params[:notify].nil? && params[:notify] != ""
   end
 
   def generate_share_url(fingerprint)
@@ -86,11 +81,13 @@ class EyesWeb < Sinatra::Base
   end
 
   post "/save", provides: [:html, :json] do
-    time = timed?(params[:expire]) ? params[:time].to_i : nil
-    key = store.save params[:text],
-      ttl: time,
-      notify: !params[:notify].nil? && params[:notify] != "",   # empty for CLI
+    secret = Secrest.new params[:text],
+      is_ttl: timed?,
+      ttl: params[:time],
+      notify: notify_requested?,
       email: params[:notify_email]
+
+    key = store.save secret
 
     # Generate url with key
     protocol = settings.force_ssl? ? "https" : "http"
@@ -99,7 +96,7 @@ class EyesWeb < Sinatra::Base
     if slack_request?
       "<#{url}>"
     else
-      respond_with :share, { url: url, time: time_text(time), key: key }
+      respond_with :share, { url: url, time: secret.expire_in_words, key: key }
     end
   end
 
@@ -118,14 +115,14 @@ class EyesWeb < Sinatra::Base
   # JSON fetch
   get "/note/:fingerprint" do
     fingerprint = params[:fingerprint]
-    data = store.fetch(fingerprint)
+    secret = store.fetch(fingerprint)
 
-    MailNotifier.notify_read(data[:email], fingerprint, is_ttl: data[:is_ttl]) if data[:request_notify]
+    MailNotifier.notify_read(secret.email, fingerprint, is_ttl: secret.auto_expire?) if secret.notify?
 
     content_type :json
     {
-      note: data[:secret].force_encoding(Encoding::UTF_8),
-      ttl: time_text(store.expires_in(fingerprint))
+      note: secret.message.force_encoding(Encoding::UTF_8),
+      ttl: secret.expire_in_words
     }.to_json
   end
 

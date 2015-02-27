@@ -17,7 +17,7 @@
         at a specified time
 
     %select.form-control#expire-at{ name: "time" }
-      = TIMES.each do |text, value|
+      = Secrest::TIMES.each do |text, value|
         %option{ value: value }= text
 
     .checkbox
