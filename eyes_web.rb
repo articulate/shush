@@ -83,7 +83,7 @@ class EyesWeb < Sinatra::Base
 
   post "/save", provides: [:html, :json] do
     time = timed?(params[:expire]) ? params[:time].to_i : nil
-    key = store.save params[:secret],
+    key = store.save params[:text],
       ttl: time,
       notify: !params[:notify].nil? && params[:notify] != "",   # empty for CLI
       email: params[:notify_email]
