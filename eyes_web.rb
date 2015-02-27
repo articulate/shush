@@ -82,7 +82,6 @@ class EyesWeb < Sinatra::Base
   end
 
   post "/save", provides: [:html, :json] do
-    puts params
     time = timed?(params[:expire]) ? params[:time].to_i : nil
     key = store.save params[:secret],
       ttl: time,
