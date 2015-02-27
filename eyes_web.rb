@@ -85,7 +85,7 @@ class EyesWeb < Sinatra::Base
     time = timed?(params[:expire]) ? params[:time].to_i : nil
     key = store.save params[:secret],
       ttl: time,
-      notify: !params[:notify].nil?,
+      notify: !params[:notify].nil? || !params[:notify].empty?,   # empty for CLI
       email: params[:notify_email]
 
     # Generate url with key
