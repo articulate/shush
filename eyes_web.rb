@@ -60,6 +60,10 @@ class EyesWeb < Sinatra::Base
     settings.store
   end
 
+  def slack_request?
+    params[:token] == ENV['SLACK_TOKEN']
+  end
+
   def timed?(expire)
     params[:expire] == "time"
   end
@@ -90,8 +94,13 @@ class EyesWeb < Sinatra::Base
 
     # Generate url with key
     protocol = settings.force_ssl? ? "https" : "http"
+    url = generate_share_url(key)
 
-    respond_with :share, { url: generate_share_url(key), time: time_text(time), key: key }
+    if slack_request?
+      "<#{url}>"
+    else
+      respond_with :share, { url: url, time: time_text(time), key: key }
+    end
   end
 
   get "/read/not_found" do
