@@ -1,8 +1,8 @@
 %form{ action: "/save", method: "POST" }
 
   #message.form-group
-    %label{ for: "secret" } Message
-    %textarea#note.form-control{ name: "secret", rows: "3" }
+    %label{ for: "text" } Message
+    %textarea#note.form-control{ name: "text", rows: "3" }
     %input.btn.btn-default{ type: :submit, value: "Save" }
 
   %label{ for: "options" } This message will self-destruct...
