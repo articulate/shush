@@ -119,13 +119,14 @@ class EyesWeb < Sinatra::Base
   get "/note/:fingerprint" do
     fingerprint = params[:fingerprint]
     data = store.fetch(fingerprint)
+    ttl = data[:is_ttl] ? store.expires_in(fingerprint) : nil
 
     MailNotifier.notify_read(data[:email], fingerprint, is_ttl: data[:is_ttl]) if data[:request_notify]
 
     content_type :json
     {
       note: data[:secret].force_encoding(Encoding::UTF_8),
-      ttl: time_text(store.expires_in(fingerprint))
+      ttl: time_text(ttl)
     }.to_json
   end
 
