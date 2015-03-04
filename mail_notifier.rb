@@ -2,7 +2,7 @@ require 'mail'
 
 class MailNotifier
   class << self
-    DEFAULT_FROM = "Shush <plukevdh+shush@articulate.com>"
+    DEFAULT_FROM = "Shush <shush@articulate.com>"
 
     def notify_read(email, link, is_ttl:)
       begin
