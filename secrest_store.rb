@@ -2,61 +2,38 @@
 require_relative 'crypt'
 require "redis"
 
-TIMES = {
-  "10 minutes" => 10,
-  "1 hour"     => 60,
-  "1 day"      => 1440,
-  "1 week"     => 10080,
-}
-
-DATA_KEYS = %i[
-  secret
-  is_ttl
-  email
-  request_notify
-]
-
 class SecrestStore
   attr_reader :redis
-
-  MAX_TTL = TIMES.values.max
 
   def initialize(redis=Redis.new)
     @redis = redis
   end
 
-  def encrypt(content)
-    Crypt.new.encrypt(content)
-  end
-
-  def save(secret, ttl:, notify:, email:)
+  def save(secret)
     crypt = Crypt.new
     key = crypt.fingerprint
-    value = crypt.encrypt(secret)
+    encrypted = crypt.encrypt(secret.message)
+    secret.message = encrypted
 
-    redis.mapped_hmset key, format_data(value,
-      is_ttl: !ttl.nil?,
-      notify: notify,
-      email: email)
-    set_expire key, (ttl || MAX_TTL)
+    redis.mapped_hmset key, secret.to_h
+    set_expire key, secret.expire_in_seconds
 
     key
   end
 
   def fetch(key)
-    content = redis.mapped_hmget(key, *DATA_KEYS)
+    content = redis.mapped_hmget(key, *Secrest::DATA_KEYS)
     return false if content.nil?
 
-    is_ttl = bool content[:is_ttl]
-    destroy(key) unless is_ttl
+    secret = Secrest.from_redis(content, expires_in(key))
 
     crypt = Crypt.from_fingerprint(key)
-    unsecret = crypt.decrypt(content[:secret])
+    unsecret = crypt.decrypt(secret.message)
+    secret.message = unsecret
 
-    format_data unsecret,
-      is_ttl: is_ttl,
-      notify: bool(content[:request_notify]),
-      email: content[:email]
+    destroy(key) unless secret.auto_expire?
+
+    secret
   end
 
   def exists?(key)
@@ -69,38 +46,12 @@ class SecrestStore
 
   # remember to convert to minutes coming back out to be consistent
   def expires_in(key)
-    to_minutes redis.ttl(key)
-  end
-
-  def auto_expire?(key)
-    bool redis.hget(key, :is_ttl)
+    redis.ttl(key)
   end
 
   private
 
-  # forces text keys from redis into booleans
-  def bool(val)
-    val == "true"
-  end
-
-  def format_data(secret, is_ttl: false, notify: false, email: nil)
-    {
-      secret: secret,
-      is_ttl: is_ttl,
-      request_notify: notify,
-      email: email
-    }
-  end
-
   def set_expire(key, time)
-    redis.expire key, to_seconds(time)
-  end
-
-  def to_seconds(time)
-    time * 60
-  end
-
-  def to_minutes(time)
-    (time.to_f / 60).round(2)
+    redis.expire key, time
   end
 end
