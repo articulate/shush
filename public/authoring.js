@@ -21,4 +21,6 @@ $(document).ready(function() {
   setTimeout(function() {
     $flash.hide('slow');
   }, 2000);
+
+  $("#note").focus();
 });
