@@ -17,7 +17,7 @@
 
     %select#expire-at{ name: "time" }
       = Secrest::TIMES.each do |text, value|
-        %option{ value: value }= text
+        %option{ value: value, selected: value == Secrest::DEFAULT_EXPIRE }= text
 
     .checkbox
       %label
