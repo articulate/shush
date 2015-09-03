@@ -80,6 +80,10 @@ class EyesWeb < Sinatra::Base
     markdown :info, layout_engine: :haml
   end
 
+  get "/about/for_real" do
+    markdown :for_real, layout_engine: :haml
+  end
+
   post "/save", provides: [:html, :json] do
     secret = Secrest.new params[:text],
       is_ttl: timed?,
