@@ -14,8 +14,8 @@ else
 end
 
 require_relative "objects/secrest"
-require_relative "secrest_store"
-require_relative "mail_notifier"
+require_relative "services/secrest_store"
+require_relative "services/mail_notifier"
 
 class EyesWeb < Sinatra::Base
   register Sinatra::Contrib
