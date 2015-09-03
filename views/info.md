@@ -2,7 +2,7 @@
 
 Shush is a simple app to help send sensitive information in the internet without fear of data being leaked years later. It's like Snapchat, but for plaintext data. Once the message has been read, it destroys itself! Shush is great for quickly and securely sharing passwords, keys, tokens, or any other bits of sensitive data you want to share with someone once. The notes you create here will automatically self destruct when viewed **or** at a time you specify when creating the note (10 minutes, 1 hour, 1 day, 1 week).
 
-![auto-destruct option](http://d.pr/i/12cbA/3vp3qXlU+)
+![auto-destruct option](http://d.pr/i/14JWB/5RlBi3Se+)
 
 Shush can also notify you when your message is read if you so chose, simply by providing an email address.
 
