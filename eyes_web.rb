@@ -80,7 +80,7 @@ class EyesWeb < Sinatra::Base
     markdown :info, layout_engine: :haml
   end
 
-  get "/about/for_real" do
+  get "/about/for-reals" do
     markdown :for_real, layout_engine: :haml
   end
 
