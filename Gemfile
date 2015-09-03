@@ -15,6 +15,7 @@ gem "sinatra"
 gem "sinatra-contrib"
 gem 'rack-flash3', github: 'treeder/rack-flash'
 gem 'mail'
+gem 'http'
 
 group :development do
   gem "byebug"

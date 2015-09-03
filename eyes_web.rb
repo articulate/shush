@@ -14,6 +14,7 @@ else
 end
 
 require_relative "objects/secrest"
+require_relative "services/secrest_imager"
 require_relative "services/secrest_store"
 require_relative "services/mail_notifier"
 
@@ -81,6 +82,9 @@ class EyesWeb < Sinatra::Base
 
     if answer == '42'
       markdown :for_real, layout_engine: :haml
+    elsif answer == 'seacrest'
+      images = SecrestImager.new.get(params[:count] || 1)
+      images.map {|img| "<img src='#{img}'>" }.join(" ")
     else
       markdown :info, layout_engine: :haml
     end
