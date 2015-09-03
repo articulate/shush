@@ -2,8 +2,7 @@
 
   #message.form-group
     %label{ for: "text" } Message
-    %textarea#note.form-control{ name: "text", rows: "3" }
-    %input.btn.btn-default{ type: :submit, value: "Save" }
+    %textarea#note{ name: "text", rows: "3" }
 
   %label{ for: "options" } This message will self-destruct...
   #options.form-group
@@ -16,7 +15,7 @@
         %input.radio#expire-time{ type: "radio", name: "expire", value: :time }
         at a specified time
 
-    %select.form-control#expire-at{ name: "time" }
+    %select#expire-at{ name: "time" }
       = Secrest::TIMES.each do |text, value|
         %option{ value: value }= text
 
@@ -27,6 +26,8 @@
     #email
       %label{ for: 'notify_email' } Email:
       %input#notify-email{ name: "notify_email", placeholder: 'notify@email.com' }
+
+  %input.buddon{ type: :submit, value: "Save" }
 
 - content_for :js do
   %script{ src: "/authoring.js" }
