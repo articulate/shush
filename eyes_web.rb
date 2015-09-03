@@ -77,11 +77,13 @@ class EyesWeb < Sinatra::Base
   end
 
   get "/about" do
-    markdown :info, layout_engine: :haml
-  end
+    answer = params[:answer]
 
-  get "/about/for-reals" do
-    markdown :for_real, layout_engine: :haml
+    if answer == '42'
+      markdown :for_real, layout_engine: :haml
+    else
+      markdown :info, layout_engine: :haml
+    end
   end
 
   post "/save", provides: [:html, :json] do
