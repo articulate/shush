@@ -65,10 +65,10 @@ select {
   width: 100%;
   word-break: normal;
 }
+
 .content {
   margin: 0 50px;
 }
-
 .content.body {
   margin-top: 25px;
 }
@@ -84,6 +84,10 @@ header {
 
 } header .content {
   vertical-align: middle;
+}
+
+.body img {
+  border: 1px solid #e7e7e8;
 }
 
 .logo {
