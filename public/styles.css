@@ -118,8 +118,23 @@ nav {
   color: #0d8fd0;
 }
 
-#expire-at, #ttl, #email {
+.select-wrapper, #ttl, #email {
   display: none;
+}
+
+.select-wrapper {
+  position: relative;
+  width: 300px;
+}
+.select-wrapper:before {
+  font-family: 'articons';
+  content: "\e606";
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  font-size: 13px !important;
+  line-height: 1.8em !important;
 }
 
 #ttl {

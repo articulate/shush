@@ -3,7 +3,7 @@ $(document).ready(function() {
   $email = $("#email")
   $readSelect = $("#expire-read")
   $timeSelect = $("#expire-time")
-  $times = $("#expire-at")
+  $times = $(".select-wrapper")
   $flash = $("#flash")
 
   function toggleTimeSelect(evt) {
