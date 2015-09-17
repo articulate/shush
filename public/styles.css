@@ -45,8 +45,8 @@ h1,h2,h3,h4 {
   text-transform: uppercase;
 }
 
-h1 { font-size: 41px; }
-h2 { font-size: 31px; }
+h1 { font-size: 41px; font-weight: 400; }
+h2 { font-size: 31px; margin-top: 25px; }
 h3 { font-size: 21px; }
 
 select {
@@ -88,6 +88,9 @@ header {
 
 .body img {
   border: 1px solid #e7e7e8;
+  max-width: 350px;
+  margin: 15px 20px;
+  display: block;
 }
 
 .logo {
@@ -127,4 +130,6 @@ nav {
 
 .info {
   padding: 20px 0;
+} .info img {
+
 }

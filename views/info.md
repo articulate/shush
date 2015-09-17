@@ -1,20 +1,40 @@
-## What is Shush?
+# WHAT IS SHUSH?
 
-Shush is a simple app to help send sensitive information in the internet without fear of data being leaked years later. It's like Snapchat, but for plaintext data. Once the message has been read, it destroys itself! Shush is great for quickly and securely sharing passwords, keys, tokens, or any other bits of sensitive data you want to share with someone once. The notes you create here will automatically self destruct when viewed **or** at a time you specify when creating the note (10 minutes, 1 hour, 1 day, 1 week).
+Shush is the easiest way to send sensitive information over the internet securely.
 
-![auto-destruct option](http://d.pr/i/14JWB/5RlBi3Se+)
+Shush encrypts your message, and the message self-destructs once it’s read. It’s like SnapchatTM for plain-text data.
 
-Shush can also notify you when your message is read if you so chose, simply by providing an email address.
+Use Shush to share passwords, keys, tokens, and other private data.
 
-![notification preferences](http://d.pr/i/1bH6r/1JM9xkpf+)
+## HOW TO SEND SECURE MESSAGES
 
-We think it's pretty handy and hope you do too.
+1. Type your message.
 
-### Details
+2. Choose when it’ll self-destruct—either when it’s first viewed or at a specific time.
+![Destruct](/images/demo1.png)
 
-We [SHA-2](https://en.wikipedia.org/wiki/SHA-2) [RSA encrypt](https://en.wikipedia.org/wiki/RSA_%28cryptosystem%29) all data transmitted to our servers over [HTTPS/TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security). Once your secret securely reaches our servers, it is re-encrypted with [XSalsa20](https://en.wikipedia.org/wiki/Salsa20)[Poly1305](https://en.wikipedia.org/wiki/Poly1305-AES) from the [NaCl](http://nacl.cr.yp.to/valid.html) cryptography library. The note is stored as a short-lived item in a key value store, being permanently purged on first read or at the time you specified when creating the note. We do not log your secret data on the server. As an added security precaution we recommend signing your messages using PGP or another mechanism (we like PGP because [keybase.io](https://keybase.io) makes it so easy to verify!). For even stronger security we recommend encrypting your message before you give it to us. But that's entirely up to you. All unread notes will be automatically destroyed after one week.
+3. Mark the notification box if you want to receive an email when your message is read.
+![Notify](/images/demo2.png)
 
-### Authors
+4. Click Save to create a secure link.
+
+5. Send the secure link to the recipient.
+![Share](/images/demo3.png)
+
+## HOW SHUSH ENCRYPTS AND DESTROYS MESSAGES
+
+Your message is RSA-encrypted during transmission to our servers with SHA-1 over HTTPS/TLS.
+
+When your message reaches our servers, it’s re-encrypted with XSalsa20Poly1305 from the NaCl cryptography library.
+
+Your message is stored as a short-lived item in a database and is permanently purged when it’s first read or at the time you specified. (An unread message will be automatically destroyed after one week.)
+
+We don’t log your secret message on our servers.
+
+As an added security precaution, you can sign your message with PGP encryption. We like PGP because keybase.io makes it so easy to verify. For even stronger security, you can also encrypt your message before you Shush it.
+
+### MEET THE AUTHORS
 
 - [Adam Ochonicki](https://github.com/fromonesrc)
 - [Luke van der Hoeven](https://github.com/plukevdh)
+
