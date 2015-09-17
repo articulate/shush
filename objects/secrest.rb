@@ -44,7 +44,7 @@ class Secrest
     if auto_expire?
       "in #{time_ago_in_words(ttl.minutes.from_now)}"
     else
-      "immediately"
+      "when read"
     end
   end
 
