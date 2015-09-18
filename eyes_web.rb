@@ -39,7 +39,7 @@ class EyesWeb < Sinatra::Base
   end
 
   configure :production do
-    set :host, "shush.articulate.com"
+    set :host, ENV["SHUSH_HOST"] || "shush.articulate.com"
     set :force_ssl, true
     set :redis_url, ENV["REDISTOGO_URL"]
     set :mailer, [Mail::Postmark, api_token: ENV['POSTMARK_API_TOKEN']]
