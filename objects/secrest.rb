@@ -5,7 +5,7 @@ require 'action_view/helpers'
 class Secrest
   include ActionView::Helpers::DateHelper
 
-  DEFAULT_EXPIRE = 60
+  DEFAULT_EXPIRE = 1440
   TIMES = {
     "10 minutes" => 10,
     "1 hour"     => 60,
