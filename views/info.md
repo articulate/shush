@@ -23,7 +23,7 @@ Use Shush to share passwords, keys, tokens, and other private data.
 
 ## HOW SHUSH ENCRYPTS AND DESTROYS MESSAGES
 
-Your message is RSA-encrypted during transmission to our servers with SHA-1 over HTTPS/TLS.
+Your message is RSA-encrypted during transmission to our servers with SHA-2 over HTTPS/TLS.
 
 When your message reaches our servers, it’s re-encrypted with XSalsa20Poly1305 from the NaCl cryptography library.
 
