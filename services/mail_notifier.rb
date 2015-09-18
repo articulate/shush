@@ -21,7 +21,7 @@ class MailNotifier
           html_part do
             msg = "Your message was read"
             msg += is_ttl ? "." : " and destroyed."
-            msg += "The note's identifier is <pre>#{link}</pre>."
+            msg += "The note's identifier is <i>#{link}</i>."
 
             content_type 'text/html; charset=UTF-8'
             body msg
