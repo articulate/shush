@@ -16,7 +16,7 @@ Use Shush to share passwords, keys, tokens, and other private data.
 3. Mark the notification box if you want to receive an email when your message is read.
 ![Notify](/images/demo2.png)
 
-4. Click Save to create a secure link.
+4. Click Share to create a secure link.
 
 5. Send the secure link to the recipient.
 ![Share](/images/demo3.png)
