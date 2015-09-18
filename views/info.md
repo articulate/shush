@@ -33,7 +33,7 @@ We don’t log your secret message on our servers.
 
 As an added security precaution, you can sign your message with [PGP encryption](https://en.wikipedia.org/wiki/Pretty_Good_Privacy). We like PGP because [keybase.io](https://keybase.io/) makes it so easy to verify. For even stronger security, you can also encrypt your message before you Shush it.
 
-### MEET THE AUTHORS
+## MEET THE AUTHORS
 
 - [Adam Ochonicki](https://github.com/fromonesrc)
 - [Luke van der Hoeven](https://github.com/plukevdh)
