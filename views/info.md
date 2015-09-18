@@ -2,7 +2,7 @@
 
 Shush is the easiest way to send sensitive information over the internet securely.
 
-Shush encrypts your message, and the message self-destructs once it’s read. It’s like SnapchatTM for plain-text data.
+Shush encrypts your message, and the message self-destructs once it’s read. It’s like Snapchat™ for plain-text data.
 
 Use Shush to share passwords, keys, tokens, and other private data.
 
