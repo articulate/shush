@@ -23,15 +23,15 @@ Use Shush to share passwords, keys, tokens, and other private data.
 
 ## HOW SHUSH ENCRYPTS AND DESTROYS MESSAGES
 
-Your message is RSA-encrypted during transmission to our servers with SHA-2 over HTTPS/TLS.
+Your message is [RSA-encrypted](https://en.wikipedia.org/wiki/RSA_%28cryptosystem%29) during transmission to our servers with [SHA-1](https://en.wikipedia.org/wiki/SHA-1) over [HTTPS/TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security).
 
-When your message reaches our servers, it’s re-encrypted with XSalsa20Poly1305 from the NaCl cryptography library.
+When your message reaches our servers, it’s re-encrypted with [XSalsa20](https://en.wikipedia.org/wiki/Salsa20)[Poly1305](https://en.wikipedia.org/wiki/Poly1305-AES) from the [NaCl](http://nacl.cr.yp.to/valid.html) cryptography library.
 
 Your message is stored as a short-lived item in a database and is permanently purged when it’s first read or at the time you specified. (An unread message will be automatically destroyed after one week.)
 
 We don’t log your secret message on our servers.
 
-As an added security precaution, you can sign your message with PGP encryption. We like PGP because keybase.io makes it so easy to verify. For even stronger security, you can also encrypt your message before you Shush it.
+As an added security precaution, you can sign your message with [PGP encryption](https://en.wikipedia.org/wiki/Pretty_Good_Privacy). We like PGP because [keybase.io](https://keybase.io/) makes it so easy to verify. For even stronger security, you can also encrypt your message before you Shush it.
 
 ### MEET THE AUTHORS
 

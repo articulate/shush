@@ -1,7 +1,5 @@
 %p
-  Use this secure link to share your message. It'll expire
-  = time
-  or
+  = "Use this secure link to share your message. It'll expire #{time}, or"
   %a{ href: "/destroy/#{key}" } you can destroy it right now.
 
 %input{ type: "text", value: url, onclick: "this.focus();this.select();" }

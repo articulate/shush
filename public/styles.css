@@ -88,7 +88,7 @@ header {
 
 .body img {
   border: 1px solid #e7e7e8;
-  max-width: 350px;
+  max-width: 450px;
   margin: 15px 20px;
   display: block;
 }
@@ -123,18 +123,25 @@ nav {
 }
 
 .select-wrapper {
+  background-color: #fff;
   position: relative;
   width: 300px;
 }
 .select-wrapper:before {
   font-family: 'articons';
   content: "\e606";
+  z-index: 1;
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 1;
   font-size: 13px !important;
   line-height: 1.8em !important;
+  z-index: 1;
+} .select-wrapper select {
+  position: relative;
+  cursor: pointer;
+  background-color: transparent;
+  z-index: 10;
 }
 
 #ttl {
@@ -145,6 +152,4 @@ nav {
 
 .info {
   padding: 20px 0;
-} .info img {
-
 }
