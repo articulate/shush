@@ -1,24 +1,24 @@
 %form{ action: "/save", method: "POST" }
 
   #message.form-group
-    %label{ for: "text" } Message
-    %textarea#note.form-control{ name: "text", rows: "3" }
-    %input.btn.btn-default{ type: :submit, value: "Save" }
+    %label{ for: "text" } Message:
+    %textarea#note{ name: "text", rows: "3" }
 
-  %label{ for: "options" } This message will self-destruct...
+  %label{ for: "options" } This message will self-destruct:
   #options.form-group
     .radio
       %label
         %input.radio#expire-read{ type: "radio", name: "expire", value: :read, checked: :checked }
-        when it's first viewed
+        When it's first viewed
     .radio
       %label
         %input.radio#expire-time{ type: "radio", name: "expire", value: :time }
-        at a specified time
+        At a specified time
 
-    %select.form-control#expire-at{ name: "time" }
-      = Secrest::TIMES.each do |text, value|
-        %option{ value: value }= text
+    .select-wrapper
+      %select#expire-at{ name: "time", width: "350px" }
+        = Secrest::TIMES.each do |text, value|
+          %option{ value: value, selected: value == Secrest::DEFAULT_EXPIRE }= text
 
     .checkbox
       %label
@@ -27,6 +27,8 @@
     #email
       %label{ for: 'notify_email' } Email:
       %input#notify-email{ name: "notify_email", placeholder: 'notify@email.com' }
+
+  %input.buddon{ type: :submit, value: "Share" }
 
 - content_for :js do
   %script{ src: "/authoring.js" }

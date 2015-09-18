@@ -5,6 +5,7 @@ require 'action_view/helpers'
 class Secrest
   include ActionView::Helpers::DateHelper
 
+  DEFAULT_EXPIRE = 1440
   TIMES = {
     "10 minutes" => 10,
     "1 hour"     => 60,
@@ -43,7 +44,7 @@ class Secrest
     if auto_expire?
       "in #{time_ago_in_words(ttl.minutes.from_now)}"
     else
-      "immediately"
+      "when read"
     end
   end
 

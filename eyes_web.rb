@@ -14,8 +14,9 @@ else
 end
 
 require_relative "objects/secrest"
-require_relative "secrest_store"
-require_relative "mail_notifier"
+require_relative "services/secrest_imager"
+require_relative "services/secrest_store"
+require_relative "services/mail_notifier"
 
 class EyesWeb < Sinatra::Base
   register Sinatra::Contrib
@@ -38,7 +39,7 @@ class EyesWeb < Sinatra::Base
   end
 
   configure :production do
-    set :host, "shush.articulate.com"
+    set :host, ENV["SHUSH_HOST"] || "shush.articulate.com"
     set :force_ssl, true
     set :redis_url, ENV["REDISTOGO_URL"]
     set :mailer, [Mail::Postmark, api_token: ENV['POSTMARK_API_TOKEN']]
@@ -77,7 +78,16 @@ class EyesWeb < Sinatra::Base
   end
 
   get "/about" do
-    markdown :info, layout_engine: :haml
+    answer = params[:answer]
+
+    if answer == '42'
+      markdown :for_real, layout_engine: :haml
+    elsif answer == 'seacrest'
+      images = SecrestImager.new.get(params[:count] || 1)
+      images.map {|img| "<img src='#{img}'>" }.join(" ")
+    else
+      markdown :info, layout_engine: :haml
+    end
   end
 
   post "/save", provides: [:html, :json] do

@@ -1,0 +1,154 @@
+@font-face {
+    font-family: "articons";
+    font-style: normal;
+    font-weight: normal;
+    src: url(/fonts/articons.eot);
+    src: url(/fonts/articons.eot) format("embedded-opentype"),url(/fonts/articons.woff) format("woff"),url(/fonts/articons.ttf) format("truetype"),url(/fonts/articons.svg) format("svg")
+}
+
+[class*="icon-"] {
+    font-family: "articons";
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    line-height: 1;
+    speak: none;
+    text-transform: none;
+    vertical-align: inherit;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+.icon-chat-left:before {
+    content: "\e600"
+}
+
+.icon-chat-right:before {
+    content: "\e601"
+}
+
+.icon-play:before {
+    content: "\f04b"
+}
+
+.icon-caret-down:before {
+    content: "\f0d7"
+}
+
+.icon-complete:before {
+    content: "\e617"
+}
+
+.icon-chevron-down:before {
+    content: "\e606"
+}
+
+.icon-chevron-left:before {
+    content: "\e608"
+}
+
+.icon-chevron-right:before {
+    content: "\e609"
+}
+
+.icon-facebook:before {
+    content: "\e612"
+}
+
+.icon-twitter:before {
+    content: "\e613"
+}
+
+.icon-linkedin:before {
+    content: "\e614"
+}
+
+.icon-minus:before {
+    content: "\f068"
+}
+
+.icon-delete-circle:before {
+    content: "\e628"
+}
+
+.icon-search:before {
+    content: "\e602"
+}
+
+.icon-bars:before {
+    content: "\f0c9"
+}
+
+.icon-leave:before {
+    content: "\f08b"
+}
+
+.icon-times:before {
+    content: "\e60a"
+}
+
+.icon-arrow-left:before {
+    content: "\e603"
+}
+
+.icon-facebook {
+    color: #3b5998
+}
+
+.icon-twitter {
+    color: #55acee
+}
+
+.icon-linkedin {
+    color: #0077b5
+}
+
+.icon--circular {
+    font-size: 16px;
+    line-height: 1.6em;
+    border-radius: 50%;
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    width: 36px;
+    background: #e7e7e8;
+    color: #3f4548
+}
+
+.icon--circular[class*="icon-chevron-"] {
+    font-size: 11px;
+    line-height: 1.8em;
+    line-height: 36px
+}
+
+.icon--circular.icon-facebook,.icon--circular.icon-linkedin {
+    font-size: 14px;
+    line-height: 1.65em;
+    line-height: 36px
+}
+
+.icon--circled {
+    font-size: 16px;
+    line-height: 1.6em;
+    border-radius: 50%;
+    display: inline-block;
+    height: 32px;
+    line-height: 30px;
+    text-align: center;
+    width: 32px;
+    background: white;
+    border: #ececed 1px solid
+}
+
+.icon--circled[class*="icon-chevron-"] {
+    font-size: 11px;
+    line-height: 1.8em;
+    line-height: 30px
+}
+
+.icon--circled.icon-facebook,.icon--circled.icon-linkedin {
+    font-size: 14px;
+    line-height: 1.65em;
+    line-height: 30px
+}

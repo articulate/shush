@@ -9,7 +9,7 @@ class MailNotifier
         message = Mail.new do
           to email
           from DEFAULT_FROM
-          subject "Shush: Message Read"
+          subject "Your note on Shush was read"
 
           text_part do
             msg = "Your message (#{link}) was read"
@@ -19,9 +19,9 @@ class MailNotifier
           end
 
           html_part do
-            msg = "<h2>Your message (<i>#{link}</i>) was read"
+            msg = "Your message was read"
             msg += is_ttl ? "." : " and destroyed."
-            msg += "</h2>"
+            msg += "The note's identifier is <pre>#{link}</pre>."
 
             content_type 'text/html; charset=UTF-8'
             body msg

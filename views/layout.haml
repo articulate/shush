@@ -4,16 +4,21 @@
     %title Shush - Encrypted, confidential, self-destructing note sharing.
 
     %meta{ charset: "utf-8" }
+    %link{ rel: "stylesheet", href: "//cloud.typography.com/7615252/649408/css/fonts.css"}
     %link{ rel: "stylesheet", href: "/vendor/bootstrap.min.css" }
+    %link{ rel: "stylesheet", href: "/articons.css" }
     %link{ rel: "stylesheet", href: "/styles.css" }
 
   %body
     %header
-      %h1#brand
-        %a{ href: "/" } Shush
+      .content
+        %a{ href: "http://www.articulate.com" }
+          %img.logo{ src: "/a-logo.svg" }
+        %h1#brand
+          %a{ href: "/" } Shush
 
-      %nav
-        %a{ href: "/about" } About
+        %nav
+          %a{ href: "/about" } About
 
     - FLASH_TYPES.each do |type|
       - if flash.has?(type)
@@ -22,7 +27,7 @@
             %span &times;
           = flash[type]
 
-    #content
+    .content.body
       = yield
 
     %script{ src: "https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" }

@@ -1,17 +1,40 @@
-# We made a thing
+# WHAT IS SHUSH?
 
-This is a thing to help send your secrests about the interwebs without fear of being discovered. It's like Snapchat, but for plaintext data.
+Shush is the easiest way to send sensitive information over the internet securely.
 
-![secrest](https://camo.githubusercontent.com/ad1159fe56dc2ff04791f2716d21abfa8a7a03c9/687474703a2f2f636c2e6c792f696d6167652f325232763365306b313432662f7365616372657374732e6a7067)
+Shush encrypts your message, and the message self-destructs once it’s read. It’s like Snapchat™ for plain-text data.
 
-Shush is great for quickly and securely sharing passwords, keys, tokens, or any other bits of sensitive data you want to share with someone. The notes you create here will automatically self destruct when viewed or at a time you specify when creating the note (10 minutes, 1 hour, 1 day, 1 week). Anyway, we think it's pretty handy and hope you do too.
+Use Shush to share passwords, keys, tokens, and other private data.
 
-## Details
+## HOW TO SEND SECURE MESSAGES
 
-We [SHA-2](https://en.wikipedia.org/wiki/SHA-2) [RSA encrypt](https://en.wikipedia.org/wiki/RSA_%28cryptosystem%29) all data transmitted to our servers over [HTTPS/TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security). Once your secret securely reaches our servers, it is re-encrypted with [XSalsa20](https://en.wikipedia.org/wiki/Salsa20)[Poly1305](https://en.wikipedia.org/wiki/Poly1305-AES) from the [NaCl](http://nacl.cr.yp.to/valid.html) cryptography library. The note is stored as a short-lived item in a key value store, being permanently purged on first read or at the time you specified when creating the note. We do not log your secret data on the server. As an added security precaution we recommend signing your messages using PGP or another mechanism (we like PGP because [keybase.io](https://keybase.io) makes it so easy to verify!). For even stronger security we recommend encrypting your message before you give it to us. But that's entirely up to you. All unread notes will be automatically destroyed after one week.
+1. Type your message.
 
-## Authors
+2. Choose when it’ll self-destruct—either when it’s first viewed or at a specific time.
+![Destruct](/images/demo1.png)
 
+3. Mark the notification box if you want to receive an email when your message is read.
+![Notify](/images/demo2.png)
+
+4. Click Share to create a secure link.
+
+5. Send the secure link to the recipient.
+![Share](/images/demo3.png)
+
+## HOW SHUSH ENCRYPTS AND DESTROYS MESSAGES
+
+Your message is [RSA-encrypted](https://en.wikipedia.org/wiki/RSA_%28cryptosystem%29) during transmission to our servers with [SHA-1](https://en.wikipedia.org/wiki/SHA-1) over [HTTPS/TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security).
+
+When your message reaches our servers, it’s re-encrypted with [XSalsa20](https://en.wikipedia.org/wiki/Salsa20)[Poly1305](https://en.wikipedia.org/wiki/Poly1305-AES) from the [NaCl](http://nacl.cr.yp.to/valid.html) cryptography library.
+
+Your message is stored as a short-lived item in a database and is permanently purged when it’s first read or at the time you specified. (An unread message will be automatically destroyed after one week.)
+
+We don’t log your secret message on our servers.
+
+As an added security precaution, you can sign your message with [PGP encryption](https://en.wikipedia.org/wiki/Pretty_Good_Privacy). We like PGP because [keybase.io](https://keybase.io/) makes it so easy to verify. For even stronger security, you can also encrypt your message before you Shush it.
+
+## MEET THE AUTHORS
 
 - [Adam Ochonicki](https://github.com/fromonesrc)
 - [Luke van der Hoeven](https://github.com/plukevdh)
+
