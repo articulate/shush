@@ -2,7 +2,7 @@ require 'mail'
 
 class MailNotifier
   class << self
-    DEFAULT_FROM = "Shush <shush@articulate.com>"
+    DEFAULT_FROM = ENV.fetch('NOTIFY_FROM', 'noreply@example.com')
 
     def notify_read(email, link, is_ttl:)
       begin

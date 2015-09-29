@@ -1,5 +1,7 @@
 FROM ruby:2.2
 
+RUN apt-get update && apt-get install -y libsodium-dev
+
 RUN mkdir /app
 WORKDIR /app
 

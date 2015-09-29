@@ -17,8 +17,8 @@
 
     .select-wrapper
       %select#expire-at{ name: "time", width: "350px" }
-        = Secrest::TIMES.each do |text, value|
-          %option{ value: value, selected: value == Secrest::DEFAULT_EXPIRE }= text
+        = Secret::TIMES.each do |text, value|
+          %option{ value: value, selected: value == Secret::DEFAULT_EXPIRE }= text
 
     .checkbox
       %label

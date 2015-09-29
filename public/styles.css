@@ -109,8 +109,11 @@ nav {
   margin-left: 50px;
 }
 
+.logo {
+  margin: 0 20px 0 0;
+}
 #brand {
-  margin: 0 20px;
+  margin: 0;
   vertical-align: middle;
 } #brand a {
   color: #919191;

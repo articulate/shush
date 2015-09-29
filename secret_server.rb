@@ -4,6 +4,8 @@ require "sinatra/contrib"
 require 'rack-flash'
 require 'cryptor'
 require 'cryptor/symmetric_encryption/ciphers/xsalsa20poly1305'
+require 'redcarpet'
+require 'haml'
 
 if ENV["RACK_ENV"] == "production"
   require "rack/ssl-enforcer"
@@ -13,12 +15,11 @@ else
   require "letter_opener"
 end
 
-require_relative "objects/secrest"
-require_relative "services/secrest_imager"
-require_relative "services/secrest_store"
+require_relative "objects/secret"
+require_relative "services/secret_store"
 require_relative "services/mail_notifier"
 
-class EyesWeb < Sinatra::Base
+class SecretServer < Sinatra::Base
   register Sinatra::Contrib
 
   FLASH_TYPES = %i[danger warning info success]
@@ -32,24 +33,24 @@ class EyesWeb < Sinatra::Base
   use Rack::Flash, accessorize: FLASH_TYPES
 
   configure :development, :test do
-    set :host, ENV["SHUSH_HOST"] || "docker:9393"
+    set :host, ENV.fetch("SHUSH_HOST", "docker:9393")
     set :force_ssl, false
-    set :redis_url, "redis://redis:6379"
+    set :redis_url, ENV.fetch('REDIS_URL', "redis://redis:6379")
     set :mailer, [LetterOpener::DeliveryMethod, location: File.expand_path('../tmp/letter_opener', __FILE__)]
   end
 
   configure :production do
-    set :host, ENV["SHUSH_HOST"] || "shush.articulate.com"
+    set :host, ENV["SHUSH_HOST"]
     set :force_ssl, true
-    set :redis_url, ENV["REDISTOGO_URL"]
+    set :redis_url, ENV["REDIS_URL"] || ENV["REDISTOGO_URL"]
     set :mailer, [Mail::Postmark, api_token: ENV['POSTMARK_API_TOKEN']]
   end
 
   set :redis, Redis.new(url: settings.redis_url)
-  set :store, SecrestStore.new(settings.redis)
+  set :store, SecretStore.new(settings.redis)
 
   Mail.defaults do
-    delivery_method *EyesWeb.settings.mailer
+    delivery_method *SecretServer.settings.mailer
   end
 
   def store
@@ -82,7 +83,7 @@ class EyesWeb < Sinatra::Base
   end
 
   post "/save", provides: [:html, :json] do
-    secret = Secrest.new params[:text],
+    secret = Secret.new params[:text],
       is_ttl: timed?,
       ttl: params[:time],
       notify: notify_requested?,
