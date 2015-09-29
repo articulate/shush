@@ -17,7 +17,7 @@ require_relative "objects/secret"
 require_relative "services/secret_store"
 require_relative "services/mail_notifier"
 
-class EyesWeb < Sinatra::Base
+class SecretServer < Sinatra::Base
   register Sinatra::Contrib
 
   FLASH_TYPES = %i[danger warning info success]
@@ -48,7 +48,7 @@ class EyesWeb < Sinatra::Base
   set :store, SecretStore.new(settings.redis)
 
   Mail.defaults do
-    delivery_method *EyesWeb.settings.mailer
+    delivery_method *SecretServer.settings.mailer
   end
 
   def store
