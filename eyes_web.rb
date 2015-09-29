@@ -14,7 +14,6 @@ else
 end
 
 require_relative "objects/secrest"
-require_relative "services/secrest_imager"
 require_relative "services/secrest_store"
 require_relative "services/mail_notifier"
 
