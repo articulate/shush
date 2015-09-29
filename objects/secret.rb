@@ -2,7 +2,7 @@ require 'active_support/core_ext/numeric/time'
 require 'action_view'
 require 'action_view/helpers'
 
-class Secrest
+class Secret
   include ActionView::Helpers::DateHelper
 
   DEFAULT_EXPIRE = 1440

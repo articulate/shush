@@ -2,7 +2,7 @@
 require_relative 'crypt'
 require "redis"
 
-class SecrestStore
+class SecretStore
   attr_reader :redis
 
   def initialize(redis=Redis.new)
@@ -22,10 +22,10 @@ class SecrestStore
   end
 
   def fetch(key)
-    content = redis.mapped_hmget(key, *Secrest::DATA_KEYS)
+    content = redis.mapped_hmget(key, *Secret::DATA_KEYS)
     return false if content.nil?
 
-    secret = Secrest.from_redis(content, expires_in(key))
+    secret = Secret.from_redis(content, expires_in(key))
 
     crypt = Crypt.from_fingerprint(key)
     unsecret = crypt.decrypt(secret.message)

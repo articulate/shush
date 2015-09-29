@@ -13,8 +13,8 @@ else
   require "letter_opener"
 end
 
-require_relative "objects/secrest"
-require_relative "services/secrest_store"
+require_relative "objects/secret"
+require_relative "services/secret_store"
 require_relative "services/mail_notifier"
 
 class EyesWeb < Sinatra::Base
@@ -45,7 +45,7 @@ class EyesWeb < Sinatra::Base
   end
 
   set :redis, Redis.new(url: settings.redis_url)
-  set :store, SecrestStore.new(settings.redis)
+  set :store, SecretStore.new(settings.redis)
 
   Mail.defaults do
     delivery_method *EyesWeb.settings.mailer
@@ -81,7 +81,7 @@ class EyesWeb < Sinatra::Base
   end
 
   post "/save", provides: [:html, :json] do
-    secret = Secrest.new params[:text],
+    secret = Secret.new params[:text],
       is_ttl: timed?,
       ttl: params[:time],
       notify: notify_requested?,
