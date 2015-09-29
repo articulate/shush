@@ -9,7 +9,6 @@ require 'haml'
 
 if ENV["RACK_ENV"] == "production"
   require "rack/ssl-enforcer"
-  require 'postmark'
 else
   require 'byebug'
   require "letter_opener"
