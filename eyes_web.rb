@@ -31,16 +31,16 @@ class EyesWeb < Sinatra::Base
   use Rack::Flash, accessorize: FLASH_TYPES
 
   configure :development, :test do
-    set :host, ENV["SHUSH_HOST"] || "docker:9393"
+    set :host, ENV.fetch("SHUSH_HOST", "docker:9393")
     set :force_ssl, false
     set :redis_url, "redis://redis:6379"
     set :mailer, [LetterOpener::DeliveryMethod, location: File.expand_path('../tmp/letter_opener', __FILE__)]
   end
 
   configure :production do
-    set :host, ENV["SHUSH_HOST"] || "shush.articulate.com"
+    set :host, ENV["SHUSH_HOST"]
     set :force_ssl, true
-    set :redis_url, ENV["REDISTOGO_URL"]
+    set :redis_url, ENV["REDIS_URL"] || ENV["REDISTOGO_URL"]
     set :mailer, [Mail::Postmark, api_token: ENV['POSTMARK_API_TOKEN']]
   end
 
