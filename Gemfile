@@ -17,6 +17,8 @@ gem 'rack-flash3', github: 'treeder/rack-flash'
 gem 'mail'
 gem 'http'
 
+gem 'aws-sdk', '~> 2'
+
 group :development do
   gem "byebug"
   gem "shotgun"
@@ -24,6 +26,5 @@ group :development do
 end
 
 group :production do
-  gem 'postmark'
   gem "puma"
 end

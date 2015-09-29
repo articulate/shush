@@ -22,6 +22,11 @@ Before deploying to "production", you'll also want to set
 SHUSH_HOST=<the fqdn the app is running from>
 NOTIFY_FROM=<the email address read notifications will come from>
 REDIS_URL
+
+# IF not relying on IAM roles for SES
+AWS_ACCESS_KEY_ID
+AWS_REGION
+AWS_SECRET_ACCESS_KEY
 ```
 
 2. WE use docker and docker-compose to run our stuff, so as long as you have those things installed (usually via the [Docker Toolbox][1]) Run `docker-compose build`

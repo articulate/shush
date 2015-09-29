@@ -16,6 +16,7 @@ else
 end
 
 require_relative "objects/secret"
+require_relative "services/ses_mailer"
 require_relative "services/secret_store"
 require_relative "services/mail_notifier"
 
@@ -43,7 +44,7 @@ class SecretServer < Sinatra::Base
     set :host, ENV["SHUSH_HOST"]
     set :force_ssl, true
     set :redis_url, ENV["REDIS_URL"] || ENV["REDISTOGO_URL"]
-    set :mailer, [Mail::Postmark, api_token: ENV['POSTMARK_API_TOKEN']]
+    set :mailer, [SESMailer]
   end
 
   set :redis, Redis.new(url: settings.redis_url)
