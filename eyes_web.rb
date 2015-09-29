@@ -32,9 +32,9 @@ class EyesWeb < Sinatra::Base
   use Rack::Flash, accessorize: FLASH_TYPES
 
   configure :development, :test do
-    set :host, "articulatedev.com:9393"
+    set :host, ENV["SHUSH_HOST"] || "docker:9393"
     set :force_ssl, false
-    set :redis_url, "redis://articulatedev.com:6379"
+    set :redis_url, "redis://redis:6379"
     set :mailer, [LetterOpener::DeliveryMethod, location: File.expand_path('../tmp/letter_opener', __FILE__)]
   end
 
@@ -78,16 +78,7 @@ class EyesWeb < Sinatra::Base
   end
 
   get "/about" do
-    answer = params[:answer]
-
-    if answer == '42'
-      markdown :for_real, layout_engine: :haml
-    elsif answer == 'seacrest'
-      images = SecrestImager.new.get(params[:count] || 1)
-      images.map {|img| "<img src='#{img}'>" }.join(" ")
-    else
-      markdown :info, layout_engine: :haml
-    end
+    markdown :info, layout_engine: :haml
   end
 
   post "/save", provides: [:html, :json] do

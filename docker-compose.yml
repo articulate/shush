@@ -1,0 +1,14 @@
+redis:
+  image: redis:latest
+  expose:
+    - "6379"
+
+app:
+  build: .
+  volumes:
+    - .:/app
+  links:
+    - redis
+  ports:
+    - "9393:9393"
+  env_file: .env
