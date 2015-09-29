@@ -4,6 +4,8 @@ require "sinatra/contrib"
 require 'rack-flash'
 require 'cryptor'
 require 'cryptor/symmetric_encryption/ciphers/xsalsa20poly1305'
+require 'redcarpet'
+require 'haml'
 
 if ENV["RACK_ENV"] == "production"
   require "rack/ssl-enforcer"
