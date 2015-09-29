@@ -2,4 +2,10 @@
   = "Use this secure link to share your message. It'll expire #{time}, or"
   %a{ href: "/destroy/#{key}" } you can destroy it right now.
 
-%input{ type: "text", value: url, onclick: "this.focus();this.select();" }
+  %input{ id: "url", type: "text", value: url, onclick: "this.focus();this.select();" }
+
+  %input.buddon.copy{ type: :button, value: "Copy to Clipboard", "data-clipboard-action": "copy", "data-clipboard-target": "#url" }
+
+- content_for :js do
+  %script{ src: "/vendor/clipboard.min.js" }
+  %script{ src: "/sharing.js" }

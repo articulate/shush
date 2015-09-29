@@ -26,6 +26,10 @@ body {
   border-color: #0d8fd0;
 }
 
+.copy {
+  margin: 15px 0;
+}
+
 a {
   color: #69cbf3;
 } a:hover {
