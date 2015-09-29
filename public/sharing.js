@@ -1,9 +1,9 @@
 $(document).ready(function() {
-  var clipboard = new Clipboard('.copy');
-  var button = $(".copy");
+  var clipboard = new Clipboard('.btn');
+  var btn = $(".btn")
 
   clipboard.on('success', function(e) {
-    button.val("Copied!");
+    btn.text("Copied!");
   });
 
   clipboard.on('error', function(e) {
