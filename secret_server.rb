@@ -35,7 +35,7 @@ class SecretServer < Sinatra::Base
   configure :development, :test do
     set :host, ENV.fetch("SHUSH_HOST", "docker:9393")
     set :force_ssl, false
-    set :redis_url, "redis://redis:6379"
+    set :redis_url, ENV.fetch('REDIS_URL', "redis://redis:6379")
     set :mailer, [LetterOpener::DeliveryMethod, location: File.expand_path('../tmp/letter_opener', __FILE__)]
   end
 
