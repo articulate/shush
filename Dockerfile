@@ -10,5 +10,5 @@ RUN bundle install --without test,development
 
 COPY . /app
 
-EXPOSE 8080
+EXPOSE 9393
 CMD puma -C config/puma.rb
