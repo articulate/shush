@@ -58,7 +58,8 @@ class SecretServer < Sinatra::Base
   end
 
   def slack_request?
-    params[:token] == ENV['SLACK_TOKEN']
+    slack_token = ENV['SLACK_TOKEN']
+    !slack_token.nil? && params[:token] == slack_token
   end
 
   def timed?
