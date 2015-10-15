@@ -6,8 +6,9 @@ RUN mkdir /app
 WORKDIR /app
 
 COPY Gemfile* /app/
-RUN bundle install
+RUN bundle install --without test,development
 
 COPY . /app
 
+EXPOSE 8080
 CMD puma -C config/puma.rb
