@@ -42,7 +42,7 @@ class SecretServer < Sinatra::Base
   configure :production do
     set :host, ENV["SHUSH_HOST"]
     set :force_ssl, true
-    set :redis_url, ENV["REDIS_URL"] || ENV["REDISTOGO_URL"]
+    set :redis_url, ENV["REDIS_URL"]
     set :mailer, [SESMailer, region: ENV.fetch('AWS_REGION', 'us-east-1')]
   end
 
