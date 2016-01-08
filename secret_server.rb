@@ -9,13 +9,13 @@ require 'haml'
 
 if ENV["RACK_ENV"] == "production"
   require "rack/ssl-enforcer"
-  require 'postmark'
 else
   require 'byebug'
   require "letter_opener"
 end
 
 require_relative "objects/secret"
+require_relative "services/ses_mailer"
 require_relative "services/secret_store"
 require_relative "services/mail_notifier"
 
@@ -42,8 +42,8 @@ class SecretServer < Sinatra::Base
   configure :production do
     set :host, ENV["SHUSH_HOST"]
     set :force_ssl, true
-    set :redis_url, ENV["REDIS_URL"] || ENV["REDISTOGO_URL"]
-    set :mailer, [Mail::Postmark, api_token: ENV['POSTMARK_API_TOKEN']]
+    set :redis_url, ENV["REDIS_URL"]
+    set :mailer, [SESMailer, region: ENV.fetch('AWS_REGION', 'us-east-1')]
   end
 
   set :redis, Redis.new(url: settings.redis_url)

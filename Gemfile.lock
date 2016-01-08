@@ -19,6 +19,12 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     addressable (2.3.7)
+    aws-sdk (2.1.23)
+      aws-sdk-resources (= 2.1.23)
+    aws-sdk-core (2.1.23)
+      jmespath (~> 1.0)
+    aws-sdk-resources (2.1.23)
+      aws-sdk-core (= 2.1.23)
     backports (3.6.4)
     builder (3.2.2)
     byebug (3.5.1)
@@ -45,6 +51,7 @@ GEM
     http-form_data (1.0.1)
     http_parser.rb (0.6.0)
     i18n (0.7.0)
+    jmespath (1.1.3)
     json (1.8.2)
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -56,9 +63,6 @@ GEM
     minitest (5.5.1)
     multi_json (1.10.1)
     ordo (0.0.2)
-    postmark (1.5.0)
-      json
-      rake
     puma (2.11.1)
       rack (>= 1.1, < 2.0)
     rack (1.6.0)
@@ -103,13 +107,13 @@ PLATFORMS
 
 DEPENDENCIES
   actionview
+  aws-sdk (~> 2)
   byebug
   cryptor
   haml
   http
   letter_opener
   mail
-  postmark
   puma
   rack-flash3!
   rack-parser

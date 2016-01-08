@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "2.2.3"
+ruby "2.2.4"
 
 gem "actionview"
 gem "cryptor"
@@ -24,6 +24,6 @@ group :development do
 end
 
 group :production do
-  gem 'postmark'
+  gem 'aws-sdk', '~> 2'
   gem "puma"
 end
