@@ -2,9 +2,11 @@
 
 ## Secure, self-destructing, note-sharing service
 
-### Your Seacrests are safe with us
+https://blogs.articulate.com/life/shush-a-new-approach-to-secret-sharing/
 
 ![](http://cl.ly/image/2R2v3e0k142f/seacrests.jpg)
+
+_Your Seacrests are safe with us_
 
 ## To Run
 
