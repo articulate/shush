@@ -1,0 +1,2 @@
+jenkins:
+	echo "NO TESTS"

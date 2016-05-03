@@ -33,14 +33,12 @@ class SecretServer < Sinatra::Base
   use Rack::Flash, accessorize: FLASH_TYPES
 
   configure :development, :test do
-    set :host, ENV.fetch("SHUSH_HOST", "docker:9393")
     set :force_ssl, false
     set :redis_url, ENV.fetch('REDIS_URL', "redis://redis:6379")
     set :mailer, [LetterOpener::DeliveryMethod, location: File.expand_path('../tmp/letter_opener', __FILE__)]
   end
 
   configure :production do
-    set :host, ENV["SHUSH_HOST"]
     set :force_ssl, true
     set :redis_url, ENV["REDIS_URL"]
     set :mailer, [SESMailer, region: ENV.fetch('AWS_REGION', 'us-east-1')]
@@ -71,8 +69,7 @@ class SecretServer < Sinatra::Base
   end
 
   def generate_share_url(fingerprint)
-    protocol = settings.force_ssl? ? "https" : "http"
-    url = "#{protocol}://#{settings.host}/read/#{fingerprint}"
+    "#{request.scheme}://#{request.host}:#{request.port}/read/#{fingerprint}"
   end
 
   get "/" do
