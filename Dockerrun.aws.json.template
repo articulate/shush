@@ -1,0 +1,36 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "shush",
+      "image": "826168981788.dkr.ecr.us-east-1.amazonaws.com/shush:<REF>",
+      "essential": true,
+      "memory": 786,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 9393
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "syslog",
+        "options": {
+          "syslog-address": "udp://rsyslog.articulate.private:514",
+          "tag": "shush-rack"
+        }
+      }
+    },
+    {
+      "name": "nginx_redirect",
+      "image": "articulate/http-to-https:latest",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 8080,
+          "containerPort": 80
+        }
+      ]
+    }
+  ]
+}
