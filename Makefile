@@ -1,2 +1,2 @@
-test:
+jenkins:
 	echo "NO TESTS"
