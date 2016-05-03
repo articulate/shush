@@ -31,6 +31,7 @@ GEM
       columnize (~> 0.8)
       debugger-linecache (~> 1.2)
       slop (~> 3.6)
+    colorize (0.7.7)
     columnize (0.9.0)
     cryptor (1.1.1)
       ordo (>= 0.0.2)
@@ -66,6 +67,10 @@ GEM
     puma (2.11.1)
       rack (>= 1.1, < 2.0)
     rack (1.6.0)
+    rack-json-logs (1.1)
+      colorize
+      json
+      trollop
     rack-parser (0.6.1)
       rack
     rack-protection (1.5.3)
@@ -96,6 +101,7 @@ GEM
     slop (3.6.0)
     thread_safe (0.3.4)
     tilt (1.4.1)
+    trollop (2.1.2)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     unf (0.1.4)
@@ -116,6 +122,7 @@ DEPENDENCIES
   mail
   puma
   rack-flash3!
+  rack-json-logs
   rack-parser
   rack-ssl-enforcer
   rake
@@ -127,4 +134,4 @@ DEPENDENCIES
   sinatra-contrib
 
 BUNDLED WITH
-   1.10.6
+   1.11.2

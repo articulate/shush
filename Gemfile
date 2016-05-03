@@ -26,4 +26,5 @@ end
 group :production do
   gem 'aws-sdk', '~> 2'
   gem "puma"
+  gem "rack-json-logs"
 end

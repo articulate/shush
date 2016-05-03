@@ -9,6 +9,7 @@ require 'haml'
 
 if ENV["RACK_ENV"] == "production"
   require "rack/ssl-enforcer"
+  require "rack-json-logs"
 else
   require 'byebug'
   require "letter_opener"
@@ -42,6 +43,8 @@ class SecretServer < Sinatra::Base
     set :force_ssl, true
     set :redis_url, ENV["REDIS_URL"]
     set :mailer, [SESMailer, region: ENV.fetch('AWS_REGION', 'us-east-1')]
+
+    use Rack::JsonLogs
   end
 
   set :redis, Redis.new(url: settings.redis_url)
