@@ -11,4 +11,3 @@ app:
     - redis
   ports:
     - "9393:9393"
-  env_file: .env
