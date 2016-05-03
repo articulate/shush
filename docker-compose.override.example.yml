@@ -1,0 +1,5 @@
+app:
+  ports:
+    - "9393:9393"
+  volumes:
+    - .:/app

@@ -5,9 +5,5 @@ redis:
 
 app:
   build: .
-  volumes:
-    - .:/app
   links:
     - redis
-  ports:
-    - "9393:9393"

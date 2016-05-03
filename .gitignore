@@ -27,6 +27,7 @@ build/
 dump.rdb
 
 .env
+docker-compose.override.yml
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
