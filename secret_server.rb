@@ -79,6 +79,11 @@ class SecretServer < Sinatra::Base
     haml :write
   end
 
+  get "/health" do
+    status = 200
+    body = ""
+  end
+
   get "/about" do
     markdown :info, layout_engine: :haml
   end
