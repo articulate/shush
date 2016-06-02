@@ -34,7 +34,7 @@ class SecretServer < Sinatra::Base
   use Rack::Flash, accessorize: FLASH_TYPES
 
   configure :development, :test do
-    set :force_ssl, false
+    set :force_ssl, ENV.fetch('FORCE_SSL', true)
     set :redis_url, ENV.fetch('REDIS_URL', "redis://redis:6379")
     set :mailer, [LetterOpener::DeliveryMethod, location: File.expand_path('../tmp/letter_opener', __FILE__)]
   end
