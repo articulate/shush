@@ -75,7 +75,6 @@ GEM
       rack
     rack-protection (1.5.3)
       rack
-    rack-ssl-enforcer (0.2.8)
     rack-test (0.6.3)
       rack (>= 1.0)
     rake (10.4.2)
@@ -124,7 +123,6 @@ DEPENDENCIES
   rack-flash3!
   rack-json-logs
   rack-parser
-  rack-ssl-enforcer
   rake
   rbnacl-libsodium
   redcarpet
