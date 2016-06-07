@@ -40,7 +40,7 @@ class SecretServer < Sinatra::Base
   end
 
   configure :production do
-    set :force_ssl, true
+    set :force_ssl, ENV.fetch('FORCE_SSL', true)
     set :redis_url, ENV["REDIS_URL"]
     set :mailer, [SESMailer, region: ENV.fetch('AWS_REGION', 'us-east-1')]
 
