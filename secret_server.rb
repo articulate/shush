@@ -68,8 +68,17 @@ class SecretServer < Sinatra::Base
     !params[:notify].nil? && params[:notify] != ""
   end
 
+  def standard_port?
+    [80, 443].include?(request.port)
+  end
+
   def generate_share_url(fingerprint)
-    "#{request.scheme}://#{request.host}:#{request.port}/read/#{fingerprint}"
+    base_url = "#{request.scheme}://#{request.host}"
+
+    # add port specification unless using a standard http port (80, 443)
+    base_url += ":#{request.port}" unless standard_port?
+
+    "#{base_url}/read/#{fingerprint}"
   end
 
   get "/" do
