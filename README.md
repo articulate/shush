@@ -43,7 +43,7 @@ AWS_SECRET_ACCESS_KEY
 
 ## About
 
-This is a thing to help send your secrests about the interwebs without fear of being discovered. It's like Snapchat, but for plaintext data.
+This is a thing to help send your seacrests about the interwebs without fear of being discovered. It's like Snapchat, but for plaintext data.
 
 Shush is great for quickly and securely sharing passwords, keys, tokens, or any other bits of sensitive data you want to share with someone. The notes you create here will automatically self destruct when viewed or at a time you specify when creating the note (10 minutes, 1 hour, 1 day, 1 week). We think it's pretty handy and hope you do too.
 
