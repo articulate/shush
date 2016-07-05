@@ -1,9 +1,11 @@
-redis:
-  image: redis:latest
-  expose:
-    - "6379"
+version: '2'
+services:
+  redis:
+    image: redis:latest
+    expose:
+      - "6379"
 
-app:
-  build: .
-  links:
-    - redis
+  app:
+    build: .
+    links:
+      - redis
