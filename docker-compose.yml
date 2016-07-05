@@ -7,5 +7,5 @@ services:
 
   app:
     build: .
-    links:
+    depends_on:
       - redis
