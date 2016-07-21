@@ -21,6 +21,21 @@ require_relative "services/mail_notifier"
 
 class SecretServer < Sinatra::Base
   register Sinatra::Contrib
+  
+  configure :development, :test do
+    set :redis_url, ENV.fetch('REDIS_URL', "redis://redis:6379")
+    set :mailer, [LetterOpener::DeliveryMethod, location: File.expand_path('../tmp/letter_opener', __FILE__)]
+  end
+
+  configure :production do
+    set :redis_url, ENV["REDIS_URL"]
+    set :mailer, [SESMailer, region: ENV.fetch('AWS_REGION', 'us-east-1')]
+
+    set :raise_errors, true
+    set :logging, false
+    set :dump_errors, false
+    use Rack::JsonLogs
+  end
 
   FLASH_TYPES = %i[danger warning info success]
 
@@ -31,19 +46,6 @@ class SecretServer < Sinatra::Base
                              secret:       settings.session_secret
 
   use Rack::Flash, accessorize: FLASH_TYPES
-
-  configure :development, :test do
-    set :redis_url, ENV.fetch('REDIS_URL', "redis://redis:6379")
-    set :mailer, [LetterOpener::DeliveryMethod, location: File.expand_path('../tmp/letter_opener', __FILE__)]
-  end
-
-  configure :production do
-    set :redis_url, ENV["REDIS_URL"]
-    set :mailer, [SESMailer, region: ENV.fetch('AWS_REGION', 'us-east-1')]
-
-    use Rack::JsonLogs
-  end
-
   set :redis, Redis.new(url: settings.redis_url)
   set :store, SecretStore.new(settings.redis)
 
