@@ -1,5 +1,25 @@
 {
   "AWSEBDockerrunVersion": 2,
+  "volumes": [
+    {
+      "name": "sock",
+      "host": {
+        "sourcePath": "/var/run/docker.sock"
+      }
+    },
+    {
+      "name": "proc",
+      "host": {
+        "sourcePath": "/proc/"
+      }
+    },
+    {
+      "name": "cgroup",
+      "host": {
+        "sourcePath": "/cgroup/"
+      }
+    }
+  ],
   "containerDefinitions": [
     {
       "name": "shush",
@@ -29,6 +49,32 @@
         {
           "hostPort": 8080,
           "containerPort": 80
+        }
+      ]
+    },
+    {
+      "name": "datadog",
+      "image": "datadog/docker-dd-agent:latest",
+      "memory": 256,
+      "privileged": true,
+      "essential": false,
+      "environment": [
+        { "name": "EC2_TAGS", "value": "yes" }
+      ],
+      "mountPoints": [
+        {
+          "sourceVolume": "sock",
+          "containerPath": "/var/run/docker.sock"
+        },
+        {
+          "sourceVolume": "proc",
+          "containerPath": "/host/proc",
+          "readOnly": "true"
+        },
+        {
+          "sourceVolume": "cgroup",
+          "containerPath": "/host/sys/fs/cgroup",
+          "readOnly": "true"
         }
       ]
     }
