@@ -54,7 +54,7 @@
     },
     {
       "name": "datadog",
-      "image": "datadog/docker-dd-agent:latest",
+      "image": "articulate/articulate-dd-agent:latest",
       "memory": 256,
       "privileged": true,
       "essential": false,
