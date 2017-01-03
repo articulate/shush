@@ -23,7 +23,7 @@
   "containerDefinitions": [
     {
       "name": "shush",
-      "image": "826168981788.dkr.ecr.us-east-1.amazonaws.com/shush:<REF>",
+      "image": "826168981788.dkr.ecr.us-east-1.amazonaws.com/shush:{{REF}}",
       "essential": true,
       "memory": 786,
       "portMappings": [
@@ -35,7 +35,7 @@
       "logConfiguration": {
         "logDriver": "syslog",
         "options": {
-          "syslog-address": "udp://<RSYSLOG_HOSTNAME>:514",
+          "syslog-address": "udp://{{RSYSLOG_HOSTNAME}}:514",
           "tag": "shush-rack"
         }
       }
