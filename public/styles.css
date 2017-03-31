@@ -34,6 +34,7 @@ a {
 
 input[type="text"], textarea {
   border: 2px solid #c4c4c4 ;
+  font-family: monospace;
   padding: .25em;
   display: block;
   width: 100%;
