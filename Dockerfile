@@ -1,4 +1,4 @@
-FROM articulate/articulate-ruby:2.4
+FROM ruby:2.4
 
 RUN apt-get update && apt-get install -y libsodium-dev
 
