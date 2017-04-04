@@ -1,5 +1,8 @@
-app:
-  ports:
-    - "9393:9393"
-  volumes:
-    - .:/app
+version: '2'
+services:
+  app:
+    user: root
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/service

@@ -10,5 +10,5 @@ services:
     depends_on:
       - redis
     labels:
-      - "SERVICE_9393_NAME=shush"
-      - "SERVICE_9393_TAGS=load-balance"
+      - "SERVICE_3000_NAME=shush"
+      - "SERVICE_3000_TAGS=load-balance"
