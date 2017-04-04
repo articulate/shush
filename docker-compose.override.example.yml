@@ -1,8 +1,8 @@
 version: '2'
 services:
   app:
-    ports:
     user: root
+    ports:
       - "3000:3000"
     volumes:
       - .:/service
