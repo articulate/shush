@@ -11,4 +11,6 @@ services:
       - redis
     labels:
       - "SERVICE_3000_NAME=shush"
-      - "SERVICE_3000_TAGS=load-balance"
+      - "SERVICE_3000_TAGS=load-balance,urlprefix-shush.*/"
+      - "SERVICE_3000_CHECK_TCP=true"
+      - "SERVICE_3000_CHECK_INTERVAL=15s"
