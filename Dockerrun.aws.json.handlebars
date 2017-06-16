@@ -23,7 +23,7 @@
   "containerDefinitions": [
     {
       "name": "shush",
-      "image": "826168981788.dkr.ecr.us-east-1.amazonaws.com/shush:{{REF}}",
+      "image": "articulate/shush:{{REF}}",
       "essential": true,
       "memory": 786,
       "portMappings": [
@@ -59,7 +59,10 @@
       "privileged": true,
       "essential": false,
       "environment": [
-        { "name": "EC2_TAGS", "value": "yes" }
+        {
+          "name": "EC2_TAGS",
+          "value": "yes"
+        }
       ],
       "mountPoints": [
         {
@@ -78,5 +81,9 @@
         }
       ]
     }
-  ]
+  ],
+  "authentication": {
+    "bucket": "config-bucket-{{ACCOUNT_ID}}",
+    "key": "docker/dockercfg.json"
+  }
 }
