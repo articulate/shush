@@ -18,6 +18,7 @@ require_relative "objects/secret"
 require_relative "services/ses_mailer"
 require_relative "services/secret_store"
 require_relative "services/mail_notifier"
+require_relative "services/image_encoder"
 
 class SecretServer < Sinatra::Base
   register Sinatra::Contrib
@@ -95,12 +96,7 @@ class SecretServer < Sinatra::Base
   end
 
   post "/save", provides: [:html, :json] do
-    secret = Secret.new params[:text],
-      is_ttl: timed?,
-      ttl: params[:time],
-      notify: notify_requested?,
-      email: params[:notify_email]
-
+    secret = get_secret(params)
     key = store.save secret
 
     # Generate url with key
@@ -135,7 +131,8 @@ class SecretServer < Sinatra::Base
     content_type :json
     {
       note: secret.message.force_encoding(Encoding::UTF_8),
-      ttl: secret.expire_in_words
+      ttl: secret.expire_in_words,
+      type: secret.type
     }.to_json
   end
 
@@ -148,5 +145,26 @@ class SecretServer < Sinatra::Base
 
   not_found do
     "\"You don't belong here.\" -Radiohead"
+  end
+
+  def get_secret(params)
+    if params["secret-type"].nil? || params["secret-type"] == "text"
+      content = params[:text]
+      type = Secret::MESSAGE_TYPES[:text]
+    else
+      name = params["secret-image"][:tempfile].path
+      content = ImageEncoder.encode(name, File.extname(name))
+      type = Secret::MESSAGE_TYPES[:image]
+
+      # Delete the tempfile now rather than waiting for cleanup
+      File.delete(name) if File.owned?(name)
+    end
+
+    secret = Secret.new content,
+      type: type,
+      is_ttl: timed?,
+      ttl: params[:time],
+      notify: notify_requested?,
+      email: params[:notify_email]
   end
 end
