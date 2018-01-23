@@ -20,14 +20,6 @@
         = Secret::TIMES.each do |text, value|
           %option{ value: value, selected: value == Secret::DEFAULT_EXPIRE }= text
 
-    .checkbox
-      %label
-        %input#notify{ type: "checkbox", name: "notify" }
-        Email me when this note is read
-    #email
-      %label{ for: 'notify_email' } Email:
-      %input#notify-email{ name: "notify_email", placeholder: 'notify@email.com' }
-
   %input.buddon{ type: :submit, value: "Share" }
 
 - content_for :js do
