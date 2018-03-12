@@ -24,7 +24,7 @@ class SecretServer < Sinatra::Base
 
   FLASH_TYPES = %i[danger warning info success]
 
-  set :session_secret, ENV.fetch["SESSION_SECRET"]
+  set :session_secret, ENV["SESSION_SECRET"]
   use Rack::Session::Cookie, key:          "_rack_session",
                              path:         "/",
                              expire_after: 2592000, # In seconds
