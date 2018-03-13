@@ -38,7 +38,7 @@ class SecretServer < Sinatra::Base
   end
 
   configure :production do
-    set :redis_url, ENV["REDIS_URL"]
+    set :redis_url, ENV.fetch("REDIS_URL")
     set :mailer, [SESMailer, region: ENV.fetch('AWS_REGION', 'us-east-1')]
 
     use Rack::JsonLogs

@@ -8,12 +8,12 @@ gem "rack-parser"
 gem "rake"
 gem "rbnacl-libsodium"
 gem "redis"
-gem "sinatra"
-gem "sinatra-contrib"
+gem "sinatra", "~>2.0.1"
+gem 'sinatra-contrib'
 gem 'rack-flash3', git: 'https://github.com/treeder/rack-flash'
 gem 'mail'
 gem 'http'
-gem 'tilt', "< 2"
+gem 'tilt', "~>2.0"
 
 group :development do
   gem "byebug"
