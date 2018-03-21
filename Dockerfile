@@ -1,12 +1,12 @@
-FROM ruby:2.4
+FROM ruby:2.4-alpine3.7
 
 ENV SERVICE_USER service
 ENV SERVICE_ROOT /service
 
-RUN groupadd $SERVICE_USER && useradd --create-home --home $SERVICE_ROOT --gid $SERVICE_USER --shell /bin/bash $SERVICE_USER
+RUN addgroup $SERVICE_USER && adduser -h $SERVICE_ROOT -G $SERVICE_USER -s /bin/bash $SERVICE_USER -D
 WORKDIR $SERVICE_ROOT
 
-RUN apt-get update && apt-get install -y libsodium-dev
+RUN apk --no-cache update && apk upgrade && apk add libsodium-dev git curl-dev ruby-dev build-base
 
 COPY Gemfile* $SERVICE_ROOT/
 RUN bundle install
