@@ -34,6 +34,7 @@ GEM
     byebug (9.0.6)
     colorize (0.8.1)
     concurrent-ruby (1.0.5)
+    crass (1.0.3)
     cryptor (1.1.1)
       ordo (>= 0.0.2)
     domain_name (0.5.20170223)
@@ -58,7 +59,8 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.4.1)
       launchy (~> 2.2)
-    loofah (2.0.3)
+    loofah (2.2.1)
+      crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
@@ -73,7 +75,7 @@ GEM
       mini_portile2 (~> 2.3.0)
     ordo (0.0.2)
     public_suffix (2.0.5)
-    puma (3.8.2)
+    puma (3.11.3)
     rack (2.0.4)
     rack-json-logs (1.1)
       colorize
@@ -130,7 +132,7 @@ DEPENDENCIES
   http
   letter_opener
   mail
-  puma
+  puma (~> 3.11.0)
   rack-flash3!
   rack-json-logs
   rack-parser
