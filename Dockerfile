@@ -6,7 +6,7 @@ ENV SERVICE_ROOT /service
 RUN addgroup $SERVICE_USER && adduser -h $SERVICE_ROOT -G $SERVICE_USER -s /bin/bash $SERVICE_USER -D
 WORKDIR $SERVICE_ROOT
 
-RUN apk update && apk upgrade && apk add libsodium-dev git curl-dev ruby-dev build-base
+RUN apk --no-cache update && apk upgrade && apk add libsodium-dev git curl-dev ruby-dev build-base
 
 COPY Gemfile* $SERVICE_ROOT/
 RUN bundle install
