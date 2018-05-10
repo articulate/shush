@@ -3,6 +3,6 @@ services:
   app:
     user: root
     ports:
-      - "3000:3000"
+      - 8080
     volumes:
       - .:/service
