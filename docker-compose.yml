@@ -7,10 +7,11 @@ services:
 
   app:
     build: .
+    env_file: .env.default
     depends_on:
       - redis
     labels:
-      - "SERVICE_8080_NAME=shush"
-      - "SERVICE_8080_TAGS=load-balance,urlprefix-shush.*/"
-      - "SERVICE_8080_CHECK_TCP=true"
-      - "SERVICE_8080_CHECK_INTERVAL=15s"
+      - "SERVICE_3000_NAME=shush"
+      - "SERVICE_3000_TAGS=load-balance,urlprefix-shush.*/"
+      - "SERVICE_3000_CHECK_TCP=true"
+      - "SERVICE_3000_CHECK_INTERVAL=15s"
