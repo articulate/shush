@@ -7,6 +7,7 @@ services:
 
   app:
     build: .
+    env_file: .env.default
     depends_on:
       - redis
     labels:
