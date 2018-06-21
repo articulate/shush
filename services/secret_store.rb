@@ -1,6 +1,4 @@
-# It's a joke...
 require_relative 'crypt'
-require "redis"
 
 class SecretStore
   attr_reader :redis

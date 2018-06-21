@@ -1,4 +1,3 @@
-require "cryptor"
 require "cryptor/symmetric_encryption/ciphers/xsalsa20poly1305"
 
 class Crypt

@@ -1,5 +1,3 @@
-require 'aws-sdk'
-
 class SESMailer
   # @param [Hash] options Passes along initialization options to
   #   [Aws::SES::Client.new](http://docs.aws.amazon.com/sdkforruby/api/Aws/SES/Client.html#initialize-instance_method).
