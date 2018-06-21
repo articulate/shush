@@ -1,18 +1,8 @@
-require 'json'
-require 'sinatra/base'
-require "sinatra/contrib"
-require 'rack-flash'
-require 'cryptor'
-require 'cryptor/symmetric_encryption/ciphers/xsalsa20poly1305'
-require 'redcarpet'
-require 'haml'
+require 'rubygems'
+require 'bundler'
+Bundler.require(:default, ENV["RACK_ENV"] || "development")
 
-if ENV["RACK_ENV"] == "production"
-  require "rack-json-logs"
-else
-  require 'byebug'
-  require "letter_opener"
-end
+require 'rack-flash'
 
 require_relative "objects/secret"
 require_relative "services/ses_mailer"

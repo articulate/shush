@@ -1,5 +1,3 @@
-require 'mail'
-
 class MailNotifier
   class << self
     DEFAULT_FROM = ENV.fetch('NOTIFY_FROM', 'noreply@example.com')
