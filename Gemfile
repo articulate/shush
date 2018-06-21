@@ -8,7 +8,7 @@ gem "rack-parser"
 gem "rake"
 gem "rbnacl-libsodium"
 gem "redis"
-gem "sinatra", "~>2.0.1"
+gem "sinatra", "~> 2.0.3"
 gem 'sinatra-contrib'
 gem 'rack-flash3', git: 'https://github.com/treeder/rack-flash'
 gem 'mail'
