@@ -13,12 +13,9 @@ Use Shush to share passwords, keys, tokens, and other private data.
 2. Choose when it’ll self-destruct—either when it’s first viewed or at a specific time.
 ![Destruct](/images/demo1.png)
 
-3. Mark the notification box if you want to receive an email when your message is read.
-![Notify](/images/demo2.png)
+3. Click Share to create a secure link.
 
-4. Click Share to create a secure link.
-
-5. Send the secure link to the recipient.
+4. Send the secure link to the recipient.
 ![Share](/images/demo3.png)
 
 ## HOW SHUSH ENCRYPTS AND DESTROYS MESSAGES
