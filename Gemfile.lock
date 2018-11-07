@@ -40,7 +40,7 @@ GEM
     domain_name (0.5.20170223)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
-    ffi (1.9.18)
+    ffi (1.9.25)
     haml (4.0.7)
       tilt
     http (2.2.1)
