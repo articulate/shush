@@ -59,7 +59,7 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.4.1)
       launchy (~> 2.2)
-    loofah (2.2.2)
+    loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -71,7 +71,7 @@ GEM
     minitest (5.10.1)
     multi_json (1.13.1)
     mustermann (1.0.2)
-    nokogiri (1.8.2)
+    nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
     ordo (0.0.2)
     public_suffix (2.0.5)
@@ -147,4 +147,4 @@ DEPENDENCIES
   tilt (~> 2.0)
 
 BUNDLED WITH
-   1.16.2
+   1.16.4
