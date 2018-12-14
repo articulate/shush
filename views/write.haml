@@ -1,10 +1,25 @@
-%form{ action: "/save", method: "POST" }
+%form{ action: "/save", method: "POST", enctype: "multipart/form-data" }
+
+  %h4 Share a new:
+  .radio
+    %label
+      %input.radio#type-message{ type: "radio", name: "secret-type", value: :text, checked: :checked }
+      Message
+    %label
+      %input.radio#type-image{ type: "radio", name: "secret-type", value: :image }
+      Image
 
   #message.form-group
     %label{ for: "text" } Message:
     %textarea#note{ name: "text", rows: "12" }
 
-  %label{ for: "options" } This message will self-destruct:
+  #secret-image
+    %input{ type: "file", name: "secret-image", id: "images" }
+    .file-dummy
+      .success Image selected, click 'Share' to save
+      .default Please click or drag and drop here to select an image file
+
+  %label#options-label{ for: "options" } This message will self-destruct:
   #options.form-group
     .radio
       %label

@@ -1,11 +1,10 @@
-%h2 Here's your note
+%h2#title
 
 %pre#note{ data: { nid: key } } ...
-
+%img#display-secret-image{ data: { nid: key } }
 #ttl
 
 .info
-  If it's important, save this note somewhere secure. Once the note expires, we can't retrieve it for you.
 
 - content_for :js do
   %script{ src: "/reading.js" }

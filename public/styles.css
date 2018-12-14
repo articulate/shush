@@ -157,3 +157,7 @@ nav {
 .info {
   padding: 20px 0;
 }
+
+#display-secret-image {
+  border: 0;
+}

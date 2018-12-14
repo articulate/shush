@@ -1,0 +1,46 @@
+/* https://scribblerockerz.com/drag-n-drop-file-input-without-javascript/ */
+
+/* File upload area styles */
+
+#secret-image {
+  display: none;
+  margin-bottom: 10px;
+  width: 100%;
+  position: relative;
+}
+#secret-image input[type=file] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+#secret-image .file-dummy {
+  width: 100%;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px dashed rgba(105, 203, 243, 1);
+  text-align: center;
+  transition: background 0.3s ease-in-out;
+}
+#secret-image .file-dummy .success {
+  display: none;
+}
+#secret-image:hover .file-dummy {
+  background: rgba(255, 255, 255, 0.1);
+}
+#secret-image input[type=file]:focus + .file-dummy {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline: -webkit-focus-ring-color auto 5px;
+}
+#secret-image input[type=file]:valid + .file-dummy {
+  border-color: rgba(105, 203, 243, 1);
+  background-color: rgba(204, 238, 253, 1);
+}
+#secret-image input[type=file]:valid + .file-dummy .success {
+  display: inline-block;
+}

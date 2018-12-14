@@ -15,24 +15,32 @@ class Secret
 
   DATA_KEYS = %i[
     message
+    type
     is_ttl
     email
     notify
   ]
 
-  attr_accessor :message, :ttl, :email
+  MESSAGE_TYPES = {
+    :text => "text",
+    :image => "image"
+  }
+
+  attr_accessor :message, :type, :ttl, :email
 
   def self.from_redis(data, expiry)
     new data[:message],
+      type: data[:type],
       ttl: to_minutes(expiry),
       is_ttl: bool(data[:is_ttl]),
       notify: bool(data[:notify]),
       email: data[:email]
   end
 
-  def initialize(message, ttl: TIMES.values.max, is_ttl: false, notify: false, email: nil)
+  def initialize(message, type: nil, ttl: TIMES.values.max, is_ttl: false, notify: false, email: nil)
     @message = message
 
+    @type = type
     @is_ttl = is_ttl
     @ttl = (auto_expire? ? ttl.to_i : TIMES.values.max)  # force an auto expire of max time
 
@@ -63,6 +71,7 @@ class Secret
   def to_h
     {
       message: message,
+      type: type,
       is_ttl: auto_expire?,
       email: email,
       notify: notify?
