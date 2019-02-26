@@ -1,7 +1,8 @@
-FROM articulate/articulate-ruby:2.4-stretch-slim
+FROM ruby:2.4-slim-stretch
 
 RUN apt-get update -qq \
-    && apt-get install -y locales libsodium-dev \
+    && apt-get install -y locales libsodium-dev build-essential \
+    git patch ruby-dev zlib1g-dev liblzma-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -16,6 +17,9 @@ RUN ln -fs /usr/share/zoneinfo/GMT /etc/localtime
 
 ENV SERVICE_USER service
 ENV SERVICE_ROOT /service
+
+RUN groupadd $SERVICE_USER && useradd --create-home --home $SERVICE_ROOT --gid $SERVICE_USER --shell /bin/bash $SERVICE_USER
+WORKDIR $SERVICE_ROOT
 
 COPY Gemfile* $SERVICE_ROOT/
 RUN bundle install
