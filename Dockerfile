@@ -1,12 +1,25 @@
-FROM ruby:2.4-alpine3.7
+FROM ruby:2.4-slim-stretch
+
+RUN apt-get update -qq \
+    && apt-get install -y locales libsodium-dev build-essential \
+    git patch ruby-dev zlib1g-dev liblzma-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN locale-gen en_US.UTF-8
+
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US.UTF-8 \
+    LC_CTYPE=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8
+
+RUN ln -fs /usr/share/zoneinfo/GMT /etc/localtime
 
 ENV SERVICE_USER service
 ENV SERVICE_ROOT /service
 
-RUN addgroup $SERVICE_USER && adduser -h $SERVICE_ROOT -G $SERVICE_USER -s /bin/bash $SERVICE_USER -D
+RUN groupadd $SERVICE_USER && useradd --create-home --home $SERVICE_ROOT --gid $SERVICE_USER --shell /bin/bash $SERVICE_USER
 WORKDIR $SERVICE_ROOT
-
-RUN apk --no-cache update && apk upgrade && apk add libsodium-dev git curl-dev ruby-dev build-base
 
 COPY Gemfile* $SERVICE_ROOT/
 RUN bundle install
