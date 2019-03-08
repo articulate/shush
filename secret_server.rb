@@ -5,9 +5,7 @@ Bundler.require(:default, ENV["RACK_ENV"] || "development")
 require 'rack-flash'
 
 require_relative "objects/secret"
-require_relative "services/ses_mailer"
 require_relative "services/secret_store"
-require_relative "services/mail_notifier"
 
 class SecretServer < Sinatra::Base
   register Sinatra::Contrib
@@ -24,22 +22,16 @@ class SecretServer < Sinatra::Base
 
   configure :development, :test do
     set :redis_url, ENV.fetch('REDIS_URL', "redis://redis:6379")
-    set :mailer, [LetterOpener::DeliveryMethod, location: File.expand_path('../tmp/letter_opener', __FILE__)]
   end
 
   configure :production do
     set :redis_url, ENV.fetch("REDIS_URL")
-    set :mailer, [SESMailer, region: ENV.fetch('AWS_REGION', 'us-east-1')]
 
     use Rack::JsonLogs
   end
 
   set :redis, Redis.new(url: settings.redis_url)
   set :store, SecretStore.new(settings.redis)
-
-  Mail.defaults do
-    delivery_method *SecretServer.settings.mailer
-  end
 
   def store
     settings.store
@@ -88,8 +80,7 @@ class SecretServer < Sinatra::Base
     secret = Secret.new params[:text],
       is_ttl: timed?,
       ttl: params[:time],
-      notify: notify_requested?,
-      email: params[:notify_email]
+      notify: notify_requested?
 
     key = store.save secret
 
@@ -119,8 +110,6 @@ class SecretServer < Sinatra::Base
   get "/note/:fingerprint" do
     fingerprint = params[:fingerprint]
     secret = store.fetch(fingerprint)
-
-    MailNotifier.notify_read(secret.email, fingerprint, is_ttl: secret.auto_expire?) if secret.notify?
 
     content_type :json
     {

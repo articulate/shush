@@ -11,7 +11,6 @@ gem "redis"
 gem "sinatra", "~> 2.0.3"
 gem 'sinatra-contrib'
 gem 'rack-flash3', git: 'https://github.com/treeder/rack-flash'
-gem 'mail'
 gem 'http'
 gem 'tilt', "~>2.0"
 
