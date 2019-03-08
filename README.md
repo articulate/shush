@@ -22,7 +22,6 @@ Before deploying to production, you'll also want to set
 
 ```
 SHUSH_HOST=<the fqdn the app is running from>
-NOTIFY_FROM=<the email address read notifications will come from>
 REDIS_URL
 
 # IF not relying on IAM roles for SES
@@ -36,8 +35,6 @@ AWS_SECRET_ACCESS_KEY
 3. Once this is built, you can run locally with `docker-compose up` (add the `-d` flag to run daemonized).
 
 4. (Optional) Run `docker-machine ip <your docker machine name here>` to get the IP of your running app. Alias this in your `/etc/hosts` file to `docker`. Otherwise, you will want to set the `SHUSH_HOST` env var to match your docker machine IP.
-
-5. (Optional) Set the `NOTIFY_FROM` env var to set the reply-to address for notification emails.
 
 5. Hit the app in your browser and :boom: enjoy!
 
