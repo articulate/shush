@@ -1,5 +1,7 @@
 # Shush
 
+Primary points of contact: Adam Ochonicki and James Riley.
+
 ## Secure, self-destructing, note-sharing service
 
 https://blogs.articulate.com/life/shush-a-new-approach-to-secret-sharing/
