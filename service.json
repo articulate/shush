@@ -3,5 +3,7 @@
     "repos": [
       "dockerhub"
     ]
-  }
+  },
+  "owner": "platform",
+  "severity": "SEV3"
 }
