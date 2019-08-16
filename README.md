@@ -1,6 +1,6 @@
 # Shush
 
-Primary points of contact: Adam Ochonicki and James Riley.
+Primary points of contact: Adam Ochonicki.
 
 ## Secure, self-destructing, note-sharing service
 
