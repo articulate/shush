@@ -13,6 +13,7 @@ gem 'sinatra-contrib'
 gem 'rack-flash3', git: 'https://github.com/treeder/rack-flash'
 gem 'http'
 gem 'tilt', "~>2.0"
+gem 'sqreen', '>= 1.16'
 
 group :development do
   gem "byebug"
@@ -25,4 +26,3 @@ group :production do
   gem 'puma', '~> 3.11.0'
   gem "rack-json-logs"
 end
-gem 'sqreen', '>= 1.16'
