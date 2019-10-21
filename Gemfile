@@ -25,3 +25,4 @@ group :production do
   gem 'puma', '~> 3.11.0'
   gem "rack-json-logs"
 end
+gem 'sqreen', '>= 1.16'
