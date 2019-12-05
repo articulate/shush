@@ -73,7 +73,7 @@ GEM
       mini_portile2 (~> 2.4.0)
     ordo (0.0.2)
     public_suffix (2.0.5)
-    puma (3.11.3)
+    puma (3.12.2)
     rack (2.0.6)
     rack-json-logs (1.1)
       colorize
@@ -135,7 +135,7 @@ DEPENDENCIES
   haml
   http
   letter_opener
-  puma (~> 3.11.0)
+  puma (~> 3.12.2)
   rack-flash3!
   rack-json-logs
   rack-parser
