@@ -41,7 +41,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     erubi (1.8.0)
     ffi (1.9.25)
-    haml (5.0.0)
+    haml (5.1.2)
       temple (>= 0.8.0)
       tilt
     http (2.2.1)
@@ -116,7 +116,7 @@ GEM
       sq_mini_racer (~> 0.2.4.sqreen2)
     temple (0.8.2)
     thread_safe (0.3.6)
-    tilt (2.0.8)
+    tilt (2.0.10)
     trollop (2.1.2)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)

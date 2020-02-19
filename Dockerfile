@@ -1,4 +1,4 @@
-FROM ruby:2.4-slim-stretch
+FROM ruby:2.5-slim-stretch
 
 RUN apt-get update -qq \
     && apt-get install -y locales libsodium-dev build-essential \
