@@ -23,6 +23,6 @@ end
 
 group :production do
   gem 'aws-sdk', '~> 2'
-  gem 'puma', '~> 3.12.2'
+  gem "puma", ">= 3.12.3"
   gem "rack-json-logs"
 end

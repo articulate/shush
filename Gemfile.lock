@@ -69,11 +69,13 @@ GEM
     minitest (5.11.3)
     multi_json (1.13.1)
     mustermann (1.0.2)
+    nio4r (2.5.2)
     nokogiri (1.10.8)
       mini_portile2 (~> 2.4.0)
     ordo (0.0.2)
     public_suffix (2.0.5)
-    puma (3.12.2)
+    puma (4.3.3)
+      nio4r (~> 2.0)
     rack (2.0.8)
     rack-json-logs (1.1)
       colorize
@@ -135,7 +137,7 @@ DEPENDENCIES
   haml
   http
   letter_opener
-  puma (~> 3.12.2)
+  puma (>= 3.12.3)
   rack-flash3!
   rack-json-logs
   rack-parser
