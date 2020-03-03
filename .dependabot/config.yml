@@ -9,3 +9,4 @@ update_configs:
           update_type: "security"
     default_reviewers:
       - "ocxo"
+      - "dietervds"
