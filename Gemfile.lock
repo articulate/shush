@@ -96,7 +96,7 @@ GEM
       ffi
     rbnacl-libsodium (1.0.11)
       rbnacl (>= 3.0.1)
-    redcarpet (3.4.0)
+    redcarpet (3.5.1)
     redis (3.3.3)
     shotgun (0.9.2)
       rack (>= 1.0)
